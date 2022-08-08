@@ -2,36 +2,29 @@
 require "thread"
 require_relative './logger'
 require_relative './message'
+require_relative './message_queue'
 require_relative './share'
 module Mchat
-  class ListView
-    attr :id
+  class ChatListView
+    attr :id, :data
     def initialize(id)
       @id = id
-      @data = []
-    end
+      @message_queue = ::Mchat::MessageQueue.new
+      @size = 20
 
-    def push(data)
-      @data.push(data)
-    end
-
-    def setup
-    end
-
-  end
-
-  class ChatListView < ListView
-    def initialize(id)
-      super
-      @length = 20
-      @data = [
+      # test
+      @message_queue.push([
         { timestamp: 1659936455, uid: 'Mark24', content: "wo de gushi"},
         { timestamp: 1659936455, uid: 'Linda', content: "展示中文"},
-      ]
+      ])
+    end
+
+    def push(message)
+      @message_queue.push(message)
     end
 
     def render
-      @data.map do |i|
+      @message_queue.data.map do |i|
         Message.new(i).display
       end
     end
@@ -95,4 +88,8 @@ module Mchat
   end
 end
 
-::Mchat::Client.new.run
+
+if __FILE__ == $0
+  # just for develop
+  ::Mchat::Client.new.run
+end
