@@ -1,23 +1,9 @@
 # require "curses"
 require "thread"
 require_relative './logger'
-require "rainbow"
-
+require_relative './message'
+require_relative './share'
 module Mchat
-
-  class Message
-    def initialize(message, format = :std)
-      @message = message
-      @format = format
-    end
-
-    def display
-      if @format == :std
-        # Time format https://devdocs.io/ruby~3/datetime#method-i-strftime
-        "[#{Rainbow(Time.at(@message[:timestamp].to_i).strftime("%H:%M:%S")).blue}] #{Rainbow(@message[:uid]).green}: #{@message[:content]}"
-      end
-    end
-  end
   class ListView
     attr :id
     def initialize(id)
@@ -53,6 +39,7 @@ module Mchat
 
 
   class Client
+    include Share
     def initialize
       @welcome_display = true
       @focus = 'input_textpad' # default focus
@@ -101,31 +88,8 @@ module Mchat
       end
     end
     
-    def welcome
-      if @welcome_display
-        display_ascii_art
-      end
-    end
-
-    def display_ascii_art
-      # https://rubygems.org/gems/artii
-puts <<-'EOF'
-  __  __      _           _
- |  \/  |    | |         | |
- | \  / | ___| |__   __ _| |_
- | |\/| |/ __| '_ \ / _` | __|
- | |  | | (__| | | | (_| | |_
- |_|  |_|\___|_| |_|\__,_|\__|
-                    
-EOF
-      puts Message.new({
-        timestamp: Time.now.to_i,
-        uid: 'Mchat',
-        content: 'Welcome use Mchat!'
-      }).display
-    end
     def run
-      welcome
+      welcome(@welcome_display)
       main_loop
     end
   end
