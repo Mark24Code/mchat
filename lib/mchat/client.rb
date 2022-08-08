@@ -5,6 +5,19 @@ require "rainbow"
 
 module Mchat
 
+  class Message
+    def initialize(message, format = :std)
+      @message = message
+      @format = format
+    end
+
+    def display
+      if @format == :std
+        # Time format https://devdocs.io/ruby~3/datetime#method-i-strftime
+        "[#{Rainbow(Time.at(@message[:timestamp].to_i).strftime("%H:%M:%S")).blue}] #{Rainbow(@message[:uid]).green}: #{@message[:content]}"
+      end
+    end
+  end
   class ListView
     attr :id
     def initialize(id)
@@ -33,8 +46,7 @@ module Mchat
 
     def render
       @data.map do |i|
-        # Time format https://devdocs.io/ruby~3/datetime#method-i-strftime
-        "[#{Rainbow(Time.at(i[:timestamp].to_i).strftime("%H:%M:%S")).blue}] #{Rainbow(i[:uid]).green}: #{i[:content]}"
+        Message.new(i).display
       end
     end
   end
@@ -42,6 +54,7 @@ module Mchat
 
   class Client
     def initialize
+      @welcome_display = true
       @focus = 'input_textpad' # default focus
       @components = []
       
@@ -87,10 +100,32 @@ module Mchat
         sleep 0.16
       end
     end
-  
-    def run
-      puts "hello world"
+    
+    def welcome
+      if @welcome_display
+        display_ascii_art
+      end
+    end
 
+    def display_ascii_art
+      # https://rubygems.org/gems/artii
+puts <<-'EOF'
+  __  __      _           _
+ |  \/  |    | |         | |
+ | \  / | ___| |__   __ _| |_
+ | |\/| |/ __| '_ \ / _` | __|
+ | |  | | (__| | | | (_| | |_
+ |_|  |_|\___|_| |_|\__,_|\__|
+                    
+EOF
+      puts Message.new({
+        timestamp: Time.now.to_i,
+        uid: 'Mchat',
+        content: 'Welcome use Mchat!'
+      }).display
+    end
+    def run
+      welcome
       main_loop
     end
   end
