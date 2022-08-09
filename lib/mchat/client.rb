@@ -4,6 +4,7 @@ require_relative './logger'
 require_relative './message'
 require_relative './message_queue'
 require_relative './share'
+require_relative './api'
 module Mchat
   class ChatListView
     attr :id, :data

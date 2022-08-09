@@ -47,6 +47,22 @@ module Client
       @headers = {"Accept": "application/json"}
     end
 
+    def server_home
+      self.class.get("/")
+    end
+
+    def ping_server
+      self.class.get("/ping")
+    end
+
+    def get_server_timestamp
+      self.class.get("/timestamp")
+    end
+
+    def conn_server_startup
+      self.class.get("/startup")
+    end
+
     def get_channels
       # 获得 channels列表
       self.class.get("/channels")
@@ -111,6 +127,6 @@ module Client
 end
 
 request = ::Client::Api.new
-resp = request.fetch_channel_message("random")
+resp = request.home
 
 p resp

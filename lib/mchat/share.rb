@@ -1,3 +1,4 @@
+require_relative './api'
 module Mchat
   module Share
     def welcome(switch)
@@ -17,6 +18,7 @@ puts <<-'EOF'
  |_|  |_|\___|_| |_|\__,_|\__|
                     
 EOF
+      Client::Api.
       puts Message.new({
         timestamp: Time.now.to_i,
         user_name: 'Mchat',
