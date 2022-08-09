@@ -99,7 +99,7 @@ module Tui
       @height = opt[:height] || nil #|| @window.lines
       
       if @display == 'block' && @width == nil
-        @width = @window.cols
+        @width = @window.maxx
       end
 
       if @display == 'inline' && @width == nil
@@ -127,10 +127,11 @@ module Tui
       Curses.init_pair(font_color, font_color, bg_color)
       
       
-      # Setting formating
-      # Render
+      # Setting composing
+      
       result = nil
 
+      ## text_align
       if @content.length < @width
         if @text_align == 'left'
           result = @content + " " * (@width - @content.length)
@@ -151,9 +152,24 @@ module Tui
       end
 
       if @content.length > @width
-        result = @content[0 .. @width-1]
+        result = @content[0 .. @width-1 - 3] + '...'
       end
 
+
+
+      ## display block
+      current_y = @window.cury
+      current_x = @window.curx
+      
+      if @display == 'block'
+        current_y = current_y + 1
+      end
+
+    
+      
+
+      # Render
+      @window.setpos(current_y, current_x)
       @window.attron(Curses.color_pair(font_color)|font_style) do
         @window.addstr(result)
       end
@@ -162,14 +178,28 @@ module Tui
 end
 
 Tui.init_screen
+window = Curses::Window.new(Curses.lines, Curses.cols, 0, 0)
 
-b = Tui::Box.new(Curses, "Hello World")
+b = Tui::Box.new(window, "Hello World")
 b.styles({color: 'green', bg_color: 'green', font_style: 'bold', display: 'block'})
 b.render
 
-c = Tui::Box.new(Curses, "example")
+c = Tui::Box.new(window, "example")
 c.styles({color: 'red', bg_color: 'white', font_style: 'blink', display: 'inline'})
 c.render
 
-Tui.refresh
-Tui.hold
+div = Tui::Box.new(window, " div 100% ")
+div.styles({color: 'blue', bg_color: 'green', font_style: 'blink', display: 'block'})
+div.render
+
+d = Tui::Box.new(window, "width is10")
+d.styles({color: 'blue', bg_color: 'green', font_style: 'blink', display: 'block', width: 5})
+d.render
+
+
+window.refresh
+
+while true
+  sleep 1
+end
+# Tui.hold
