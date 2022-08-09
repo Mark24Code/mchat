@@ -1,5 +1,6 @@
-# require "curses"
+require "curses"
 require "thread"
+require "rainbow"
 require_relative './logger'
 require_relative './message'
 require_relative './message_queue'
@@ -32,59 +33,76 @@ module Mchat
   end
 
 
-  class Client
-    include Share
-    def initialize
-      @welcome_display = true
-      @focus = 'input_textpad' # default focus
-      @components = []
+  # class Client
+  #   include Share
+  #   def initialize
+  #     @welcome_display = true
+  #     @components = []
       
-      _mount_component
+  #     _mount_component
 
-      init_client
+  #     init_client
+  #   end
+
+  #   def _mount_component
+  #     @components.push(ChatListView.new('chat_timeline'))
+  #   end
+
+  #   def init_client
+  #     @components.each do |c|
+  #       c.render.map do |t|
+  #         puts t
+  #       end
+  #     end
+  #   end
+
+  #   def main_loop
+
+  #     while true
+  #       sleep 0.1
+  #     end
+  #     # key_listener_thr = Thread.new { self.key_listener }
+  #     # action_thr = Thread.new { self.action }
+  #     # render_thr = Thread.new { self.render }
+
+  #     # [key_listener_thr,action_thr, render_thr].map(&:join)
+  #   end
+
+  #   def key_listener
+  #   end
+
+  #   def action
+  #   end
+
+  #   def render
+  #     while (frame_data = @frame_data_channel.shift)
+  #       break if frame_data == :done
+  #       @render.draw(frame_data) if frame_data
+  #       sleep 0.16
+  #     end
+  #   end
+    
+  #   def run
+  #     welcome(@welcome_display)
+  #     main_loop
+  #   end
+  # end
+
+
+
+  class Client
+    def initialize
+      @screen = WinManger.new
+    end
+    def run
+      @screen.render
+      hold
     end
 
-    def _mount_component
-      @components.push(ChatListView.new('chat_timeline'))
-    end
-
-    def init_client
-      @components.each do |c|
-        c.render.map do |t|
-          puts t
-        end
-      end
-    end
-
-    def main_loop
-
+    def hold
       while true
         sleep 0.1
       end
-      # key_listener_thr = Thread.new { self.key_listener }
-      # action_thr = Thread.new { self.action }
-      # render_thr = Thread.new { self.render }
-
-      # [key_listener_thr,action_thr, render_thr].map(&:join)
-    end
-
-    def key_listener
-    end
-
-    def action
-    end
-
-    def render
-      while (frame_data = @frame_data_channel.shift)
-        break if frame_data == :done
-        @render.draw(frame_data) if frame_data
-        sleep 0.16
-      end
-    end
-    
-    def run
-      welcome(@welcome_display)
-      main_loop
     end
   end
 end
