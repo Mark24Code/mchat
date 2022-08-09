@@ -18,12 +18,9 @@ puts <<-'EOF'
  |_|  |_|\___|_| |_|\__,_|\__|
                     
 EOF
-      Client::Api.
-      puts Message.new({
-        timestamp: Time.now.to_i,
-        user_name: 'Mchat',
-        content: 'Welcome use Mchat!'
-      }).display
+      resp = ::Client::Api.conn_server_startup
+      startup_msg = JSON.parse(resp.body).fetch("data")
+      puts Message.new(startup_msg).display
     end
   end
 end

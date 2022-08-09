@@ -37,7 +37,7 @@ module Client
     RecordHaveExist = 5302
   end
 
-  class Api
+  class Request
     include HTTParty
     # TODO 读取用户文件配置
     base_uri 'localhost:4567'
@@ -124,9 +124,7 @@ module Client
       )
     end
   end
+
+  Api = ::Client::Request.new
+
 end
-
-request = ::Client::Api.new
-resp = request.home
-
-p resp

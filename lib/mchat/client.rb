@@ -14,10 +14,10 @@ module Mchat
       @size = 20
 
       # test
-      @message_queue.push([
-        { timestamp: 1659936455, user_name: 'Mark24', content: "wo de gushi"},
-        { timestamp: 1659936455, user_name: 'Linda', content: "展示中文"},
-      ])
+      # @message_queue.push([
+      #   { timestamp: 1659936455, user_name: 'Mark24', content: "wo de gushi"},
+      #   { timestamp: 1659936455, user_name: 'Linda', content: "展示中文"},
+      # ])
     end
 
     def push(message)
