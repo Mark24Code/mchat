@@ -14,8 +14,8 @@ module Mchat
 
       # test
       @message_queue.push([
-        { timestamp: 1659936455, uid: 'Mark24', content: "wo de gushi"},
-        { timestamp: 1659936455, uid: 'Linda', content: "展示中文"},
+        { timestamp: 1659936455, user_name: 'Mark24', content: "wo de gushi"},
+        { timestamp: 1659936455, user_name: 'Linda', content: "展示中文"},
       ])
     end
 

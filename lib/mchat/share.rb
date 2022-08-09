@@ -19,7 +19,7 @@ puts <<-'EOF'
 EOF
       puts Message.new({
         timestamp: Time.now.to_i,
-        uid: 'Mchat',
+        user_name: 'Mchat',
         content: 'Welcome use Mchat!'
       }).display
     end
