@@ -66,7 +66,7 @@ module VNode
       end
 
       if name.instance_of? Proc
-        return name.call(config)
+        return config=={} ? name.call : name.call(config)
       end
     end
   end

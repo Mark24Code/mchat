@@ -6,14 +6,15 @@ def m(*opt)
   VNode.m(*opt)
 end
 
-timeline = -> (opt) {
-  blogs, set_blogs = Hook.use_state([
-    "Wikis now support math and Mermaid diagrams",
-    "Advisory Database supports GitHub Actions advisories",
-    "GitHub Actions: Ubuntu 22.04 is now generally available on GitHub-hosted runners",
-    "GitHub Actions: The Ubuntu 18.04 Actions runner image is being deprecated and will "
-  ])
-  
+
+blogs, set_blogs = Hook.use_state([
+  "Wikis now support math and Mermaid diagrams",
+  "Advisory Database supports GitHub Actions advisories",
+  "GitHub Actions: Ubuntu 22.04 is now generally available on GitHub-hosted runners",
+  "GitHub Actions: The Ubuntu 18.04 Actions runner image is being deprecated and will "
+])
+
+timeline = -> (opt) {  
   cache = blogs.value.map do |blog|
     m("text", blog)
   end
@@ -21,12 +22,30 @@ timeline = -> (opt) {
   cache.push(m("source from: #{opt[:props]}"))
 }
 
+clock = -> () {
+
+  now = Time.now.strftime("%H:%M:%S")
+  return m("text", now)
+}
+
 application = -> () {
   return m([
       m("Mchat v1.0"),
       m(""),
       m(timeline, { props: "github"}),
+      m(""),
+      m(clock)
     ])
 }
 
-VNode::Render.new(application).render
+# VNode::Render.new(application).render
+
+
+clock_demo = -> () { 
+while true
+    sleep 1
+    system('clear')
+    VNode::Render.new(application).render
+  end
+}
+# clock_demo.call
