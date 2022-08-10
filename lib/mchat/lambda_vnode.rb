@@ -40,7 +40,7 @@ module VNode
     end
 
     if opt.length === 3
-      name, config, elements = opt
+      name, elements, config = opt
     end
 
     if elements.instance_of? Array
@@ -66,7 +66,17 @@ module VNode
       end
 
       if name.instance_of? Proc
-        return config=={} ? name.call : name.call(config)
+        if config == {} && elements == nil
+          return name.call
+        end
+
+        if config != {} && elements != nil
+          return name.call(elements, config)
+        end
+
+        if config != {} || elements != nil
+          return name.call(config||elements)
+        end
       end
     end
   end

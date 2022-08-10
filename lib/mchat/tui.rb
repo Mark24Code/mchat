@@ -78,6 +78,8 @@ module Tui
 
 
       def styles(opt = {})
+        p ">>>"
+        p opt
         @color = opt[:color]
         @bg_color = opt[:bg_color]
         @font_style = opt[:font_style]
@@ -98,9 +100,9 @@ module Tui
         # end
         # ```
 
-        font_color = ::Module.const_get("Tui::Color::#{@color.to_s.upcase}")
-        bg_color = ::Module.const_get("Tui::Color::#{@bg_color.to_s.upcase}")
-        font_style = ::Module.const_get("Tui::FontStyle::#{@font_style.to_s.upcase}")
+        font_color = ::Module.const_get("::Tui::Color::#{@color.to_s.upcase}")
+        bg_color = ::Module.const_get("::Tui::Color::#{@bg_color.to_s.upcase}")
+        font_style = ::Module.const_get("::Tui::FontStyle::#{@font_style.to_s.upcase}")
         Curses.init_pair(font_color, font_color, bg_color)
         
 
@@ -113,21 +115,21 @@ module Tui
   end
 end
 
-Tui.init_screen
-window = Tui.init_window
+# Tui.init_screen
+# window = Tui.init_window
 
-b = Tui::Widget::Text.new(window, "Hello World")
-b.styles({color: 'green', bg_color: 'green', font_style: 'bold'})
-b.render
+# b = Tui::Widget::Text.new(window, "Hello World")
+# b.styles({color: 'green', bg_color: 'green', font_style: 'bold'})
+# b.render
 
-d = Tui::Widget::Text.new(window, "width is10")
-d.styles({color: 'blue', bg_color: 'red', font_style: 'blink'})
-d.render
+# d = Tui::Widget::Text.new(window, "width is10")
+# d.styles({color: 'blue', bg_color: 'red', font_style: 'blink'})
+# d.render
 
 
-window.refresh
+# window.refresh
 
-while true
-  sleep 1
-end
-# Tui.hold
+# while true
+#   sleep 1
+# end
+# # Tui.hold

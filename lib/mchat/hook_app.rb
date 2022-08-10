@@ -1,5 +1,6 @@
 require './lambda_vnode'
 require './hooks'
+require './tui'
 
 
 def m(*opt)
@@ -38,8 +39,12 @@ application = -> () {
     ])
 }
 
-# VNode::Render.new(application).render
 
+app_demo = -> () {
+  VNode::Render.new(application).render
+}
+
+# app_demo.call
 
 clock_demo = -> () { 
 while true
@@ -49,3 +54,35 @@ while true
   end
 }
 # clock_demo.call
+
+
+tui_text = -> (*opt) {
+  content, config = opt
+  b = Tui::Widget::Text.new(Window, content)
+  b.styles(config)
+  b.render
+}
+
+
+tui_demo = -> () {
+  Tui.init_screen
+  Window = Tui.init_window
+
+
+  tui_app = -> () {
+    return m([
+        m(tui_text, "Hello", {color: 'blue', bg_color: 'red', font_style: 'blink'})
+      ])
+  }
+
+  VNode::Render.new(tui_app).render
+
+  Window.refresh
+
+  while true
+    sleep 1
+  end
+  # Tui.hold
+}
+
+tui_demo.call
