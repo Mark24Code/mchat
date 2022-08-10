@@ -1,5 +1,48 @@
 module VNode
-  def self.m(name = 'text', opts = {}, elements)
+  def self.m(*opt)
+    # opt is array
+    name = nil
+    config = {}
+    elements = nil
+
+    if opt.length == 0
+      throw Exception("VNode.m need at least one argument")
+    end
+
+    if opt.length == 1
+      el = opt.first
+
+      if el.instance_of? String
+        name = "text"
+        elements = opt.first
+      end
+
+      if el.instance_of? Proc
+        name = el
+      end
+
+      if el.instance_of? Array
+        name = 'array'
+        elements = el
+      end
+    end
+
+    if opt.length == 2
+      left = opt.first
+      if left.instance_of? String
+        name, elements = opt
+      end
+
+      if left.instance_of? Proc
+        name, config = opt
+        elements = nil
+      end
+    end
+
+    if opt.length === 3
+      name, config, elements = opt
+    end
+
     if elements.instance_of? Array
       return elements.map do |element|
         # m expression
@@ -19,11 +62,11 @@ module VNode
 
       # 对函数式组件支持
       if name.instance_of? Symbol
-        return method(name).call
+        return method(name).call(config)
       end
 
       if name.instance_of? Proc
-        return name.call
+        return name.call(config)
       end
     end
   end
