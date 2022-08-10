@@ -62,7 +62,17 @@ module VNode
 
       # 对函数式组件支持
       if name.instance_of? Symbol
-        return method(name).call(config)
+        if config == {} && elements == nil
+          return method(name).call
+        end
+
+        if config != {} && elements != nil
+          return method(name).call(elements, config)
+        end
+
+        if config != {} || elements != nil
+          return method(name).call(config||elements)
+        end
       end
 
       if name.instance_of? Proc
