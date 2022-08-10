@@ -44,8 +44,11 @@ module Tui
     end
 
     def init_window
-      Curses::Window.new(Curses.lines, Curses.cols, 0, 0)
+      init_screen
+      @window = Curses::Window.new(Curses.lines, Curses.cols, 0, 0)
     end
+
+    attr_accessor :window
 
     def refresh
       Curses.refresh
@@ -63,8 +66,8 @@ module Tui
       ConfigEnum = Struct.new(:color, :bg_color, :font_style)
       DefaultConfig = ConfigEnum.new('white', 'black', 'normal')
 
-      def initialize(window = nil, content = nil)
-        @window = window
+      def initialize( content = nil)
+        @window = Tui.window
         @content = content
         
         @color = DefaultConfig.color
@@ -119,6 +122,10 @@ module Tui
       end
     end
   end
+end
+
+def m(*opt)
+  VNode.m(*opt)
 end
 
 # Tui.init_screen

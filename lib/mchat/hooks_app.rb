@@ -3,10 +3,6 @@ require './hooks'
 require './tui'
 
 
-def m(*opt)
-  VNode.m(*opt)
-end
-
 
 blogs, set_blogs = Hook.use_state([
   "Wikis now support math and Mermaid diagrams",
@@ -19,17 +15,16 @@ blogs, set_blogs = Hook.use_state([
 
 tui_text = -> (*opt) {
   content, config = opt
-  b = Tui::Widget::Text.new(Window, content)
+  b = Tui::Widget::Text.new(content)
   b.styles(config)
   b.render
 }
 
 
-tui_demo = -> (app) {
-  Tui.init_screen
-  Window = Tui.init_window
+application = -> (app) {
+  Tui.init_window
   VNode::Render.new(app).render
-  Window.refresh
+  Tui.window.refresh
   while true
     sleep 1
   end
@@ -44,4 +39,4 @@ tui_app = -> () {
     ])
 }
 
-tui_demo.call(tui_app)
+application.call(tui_app)
