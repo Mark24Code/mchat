@@ -67,46 +67,46 @@ module VNode
       puts @root.render
     end
   end
-end
+enda
 
 
-class UserName < VNode::Component
-  def initialize(opt)
-    super
-    @name = opt[:name]
-  end
-  def render
-    return m("text","UserName:"+ @name)
-  end
-end
+# class UserName < VNode::Component
+#   def initialize(opt)
+#     super
+#     @name = opt[:name]
+#   end
+#   def render
+#     return m("text","UserName:"+ @name)
+#   end
+# end
 
 
-class App < VNode::Component
-  def initialize
-    super
-  end
+# class App < VNode::Component
+#   def initialize
+#     super
+#   end
 
-  def render
-    m([
-      m("hello"),
-      m("world"),
-      m(UserName, { name:"mark24"}, nil),
-      m([
-        m(
-          [
-            m("ruby"),
-            m("Python")
-          ]),
-        m("lang")
-      ]),
-    ])
-  end
-end
+#   def render
+#     m([
+#       m("hello"),
+#       m("world"),
+#       m(UserName, { name:"mark24"}, nil),
+#       m([
+#         m(
+#           [
+#             m("ruby"),
+#             m("Python")
+#           ]),
+#         m("lang")
+#       ]),
+#     ])
+#   end
+# end
 
-application = VNode::Render.new(App)
+# application = VNode::Render.new(App)
 
-application.render
-application.render
+# application.render
+# application.render
 
 # TODO
 # 更新的api + 任务队列，可供外部调用
