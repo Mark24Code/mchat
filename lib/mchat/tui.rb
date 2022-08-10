@@ -78,11 +78,17 @@ module Tui
 
 
       def styles(opt = {})
-        p ">>>"
-        p opt
-        @color = opt[:color]
-        @bg_color = opt[:bg_color]
-        @font_style = opt[:font_style]
+        if opt
+          if opt[:color]
+            @color = opt[:color]
+          end
+          if opt[:bg_color]
+            @bg_color = opt[:bg_color]
+          end
+          if opt[:font_style]
+            @font_style = opt[:font_style]
+          end
+        end
       end
 
 

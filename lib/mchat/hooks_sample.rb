@@ -64,25 +64,25 @@ tui_text = -> (*opt) {
 }
 
 
-tui_demo = -> () {
+
+
+tui_demo = -> (app) {
   Tui.init_screen
   Window = Tui.init_window
-
-
-  tui_app = -> () {
-    return m([
-        m(tui_text, "Hello", {color: 'blue', bg_color: 'red', font_style: 'blink'})
-      ])
-  }
-
-  VNode::Render.new(tui_app).render
-
+  VNode::Render.new(app).render
   Window.refresh
-
   while true
     sleep 1
   end
   # Tui.hold
 }
 
-tui_demo.call
+
+tui_app = -> () {
+  return m([
+      m(tui_text, "Hello", {color: 'blue', bg_color: 'red', font_style: 'bold'}),
+      m(tui_text, "work", {color: 'red', bg_color: 'green'})
+    ])
+}
+
+tui_demo.call(tui_app)
