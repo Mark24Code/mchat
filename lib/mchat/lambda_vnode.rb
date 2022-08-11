@@ -71,7 +71,7 @@ module VNode
         end
 
         if config != {} || elements != nil
-          return method(name).call(config||elements)
+          return __send__(name, config||elements)
         end
       end
 
