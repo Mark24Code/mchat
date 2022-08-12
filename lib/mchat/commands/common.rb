@@ -24,12 +24,13 @@ explain: quit the mchat.
         puts %Q(
              #{bold("Help: Index")}
 Choose subject to help:
-1. guide
-2. ch[annel]
-3. j[oin]
-4. m[essage]
-   q[uit]
-   h[elp]
+1. guide      : howto guide
+2. ch[annel]  : find channel or fetch channel info
+3. j[oin]     : join a channel
+4. n[ame]     : register a name in channel for chatting
+5. m[essage]  : send message in channel
+   q[uit]     : quit mchat
+   h[elp]     : find help
 
 e.g:
 type `/h guide` you will find guide guide.
@@ -50,7 +51,9 @@ type `/h 1` work fine too.
             dispatch_help "channel"
           when "join", "j", "3"
             dispatch_help "join"
-          when "message", "m", "4"
+          when "name", "n", "4"
+            dispatch_help "name"
+          when "message", "m", "5"
             dispatch_help "message"
           when "quit", "q"
             dispatch_help "quit"

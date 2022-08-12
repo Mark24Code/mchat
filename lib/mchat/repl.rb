@@ -1,10 +1,12 @@
 require "rainbow"
 require_relative "./share"
+require_relative "./status_code"
 require_relative "./printer"
 require_relative "./message"
 require_relative "./commands/common"
 require_relative "./commands/channel"
 require_relative "./commands/join"
+require_relative "./commands/name"
 require_relative "./commands/message"
 
 module Mchat
@@ -13,19 +15,21 @@ module Mchat
     def initialize
       # TODO use config
       # read config
-      @wait_prefix = "u>>"
+      @wait_prefix = ">>"
       @display_welcome = true
       @output = "./chat.log"
       @printer = Printer.new(@output)
       @channel_message_poll_time = 1 # 1s
+      @channel_message_poll_running = false
       @current_channel = nil
-      @nickname = nil
+      @current_nickname = nil
     end
 
     include Mchat::Share
     include Mchat::Commands::Guide
     include Mchat::Commands::Channel
     include Mchat::Commands::Join
+    include Mchat::Commands::Name
     include Mchat::Commands::Message
     include Mchat::Commands::Default
     include Mchat::Commands::Help
@@ -60,7 +64,7 @@ module Mchat
     def fetch_channel_task
       Thread.new do
         last_news_time = 0
-        while @current_channel
+        while @current_channel && @channel_message_poll_running
           resp = ::Mchat::Api.fetch_channel_message(@current_channel)
           data = JSON.parse(resp.body).fetch("data")
           messages = data["messages"] || []
@@ -119,6 +123,8 @@ module Mchat
         dispatch_command("channel", $1)
       when pattern_factory.call("join"), pattern_factory.call("j"), "/join", "/j"
         dispatch_command("join", $1)
+      when pattern_factory.call("name"), pattern_factory.call("n"), "/name", "/n"
+        dispatch_command("name", $1)
       when pattern_factory.call("message"), pattern_factory.call("m"), "/message", "/m"
         dispatch_command("message", $1)
       when "/quit", "/q"
@@ -130,9 +136,13 @@ module Mchat
       end
     end
 
+    def user_hint_prefix
+      printf "#{@current_channel ? '['+@current_channel+']' : '' }#{@current_nickname ? '@'+@current_nickname : '' }#{@wait_prefix}"
+    end
+
     def tick
       #   begin
-      printf @wait_prefix
+      user_hint_prefix
       user_type_in = gets
       # puts "===[debug+]==="
       # p user_type_in
