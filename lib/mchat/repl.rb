@@ -9,6 +9,7 @@ require_relative "./commands/join"
 require_relative "./commands/name"
 require_relative "./commands/leave"
 require_relative "./commands/message"
+require_relative "./commands/clear"
 
 module Mchat
   # Core REPL class
@@ -22,6 +23,9 @@ module Mchat
       @printer = Printer.new(@output)
       @channel_message_poll_time = 1 # seconds
       @channel_message_poll_running = true # global lock
+
+      @clear_repl_everytime = true # global lock
+
       @current_channel = nil
       @current_nickname = nil
     end
@@ -36,6 +40,7 @@ module Mchat
     include Mchat::Commands::Default
     include Mchat::Commands::Help
     include Mchat::Commands::Quit
+    include Mchat::Commands::Clear
 
     def puts_2_printer(content)
       @printer.display(content)
@@ -133,6 +138,8 @@ module Mchat
         dispatch_command("message", $1)
       when "/quit", "/q"
         dispatch_command("quit")
+      when "/clear", '/c'
+        dispatch_command("clear")
       when %r{^/([a-zA-Z]+)\s{1}([^s]+.*?)}, %r{^/([a-zA-Z]+)$}
         puts warn("[Mchat] `/#{$1}`command not found.")
       else
@@ -151,7 +158,7 @@ module Mchat
       # puts "===[debug+]==="
       # p user_type_in
       # puts "===[debug-]==="
-      # system('clear')
+      @clear_repl_everytime && system('clear')
       parser(user_type_in)
       sleep 0.1
       # rescue => exception

@@ -20,6 +20,15 @@ module Mchat
         content_arr.each { |line| f << "#{line}" }
       end
     end
+
+    def clear
+      File.open(@output, 'w') do |f|
+        1000.times { f << "\n"}
+      end
+      File.open(@output, 'w') do |f|
+        f << "\n"
+      end
+    end
   end
 end
 

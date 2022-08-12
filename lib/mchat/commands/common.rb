@@ -30,6 +30,7 @@ Choose subject to help:
 4. n[ame]     : register a name in channel for chatting
 5. l[eave]    : delete name in channel
 6. m[essage]  : send message in channel
+   c[lear]     : clean mchat
    q[uit]     : quit mchat
    h[elp]     : find help
 
@@ -58,6 +59,8 @@ type `/h 1` work fine too.
             dispatch_help "leave"
           when "message", "m", "6"
             dispatch_help "message"
+          when "clear", "c"
+            dispatch_help "clear"
           when "quit", "q"
             dispatch_help "quit"
           when "help", "h"
