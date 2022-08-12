@@ -22,11 +22,9 @@ module Mchat
       @text.bold
     end
   end
-  module Font
-    refine String do
-      def style
-        ::Mchat::StyleFont.new(self)
-      end
+  module Style
+    def style
+      ::Mchat::StyleFont.new(self)
     end
   end
 end

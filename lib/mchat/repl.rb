@@ -1,6 +1,13 @@
 require_relative "./version"
-require_relative "./api"
+
 require_relative "./comps/font"
+# monkey patch!
+# give String styles 
+class String
+  include Mchat::Style
+end
+
+require_relative "./api"
 require_relative "./comps/printer"
 require_relative "./comps/welcome"
 require_relative "./comps/message"
@@ -12,8 +19,6 @@ require_relative "./commands/leave"
 require_relative "./commands/message"
 require_relative "./commands/clear"
 
-# add styles to font
-using Mchat::Font
 module Mchat
   # Core REPL class
   class Repl
