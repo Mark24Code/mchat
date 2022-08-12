@@ -20,8 +20,8 @@ module Mchat
       @display_welcome = true
       @output = "./chat.log"
       @printer = Printer.new(@output)
-      @channel_message_poll_time = 1 # 1s
-      @channel_message_poll_running = false
+      @channel_message_poll_time = 1 # seconds
+      @channel_message_poll_running = true # global lock
       @current_channel = nil
       @current_nickname = nil
     end
