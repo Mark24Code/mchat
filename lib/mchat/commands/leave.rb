@@ -4,7 +4,7 @@ module Mchat
     module Leave
       def command_leave_help
         puts %Q(
-             #{bold("Help: Leave")}
+             #{"Help: Leave".style.bold}
 command: /leave
 explain: leave channel and delete your name.
 )
@@ -16,7 +16,7 @@ explain: leave channel and delete your name.
           data = JSON.parse(resp.body)
           code = data.fetch("code")
           if code == StatusCode::Success
-            puts em("#{@current_nickname} leave success.")
+            puts "#{@current_nickname} leave success.".style.primary
             @current_nickname = nil
           else
             puts warn("leave request connect fail. try again.")
@@ -29,3 +29,23 @@ explain: leave channel and delete your name.
     end
   end
 end
+
+
+# module Mchat
+#   class Command
+#   end
+
+#   class LeaveCommand
+#     def initialize
+
+#     end
+
+#     def help
+#         puts %Q(
+# #{"Help: Leave".style.bold}
+# command: /leave
+# explain: leave channel and delete your name.
+# )
+#     end
+#   end
+# end

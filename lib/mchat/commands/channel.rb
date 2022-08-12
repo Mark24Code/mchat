@@ -5,7 +5,7 @@ module Mchat
     module Channel
       def command_channel_help
         puts %Q(
-             #{bold("Help: Channel")}
+             #{"Help: Channel".style.bold}
 command: /channel <channel_name>
 explain: login the channel
 
@@ -19,7 +19,7 @@ explain: login the channel
           all_channels = JSON.parse(resp.body).fetch("data")
 
           # cli
-          content = em("Mchat Channels:\n")
+          content = "Mchat Channels:\n".style.primary
           all_channels.each do |c|
             content << "* #{c}\n"
           end
@@ -38,11 +38,11 @@ explain: login the channel
           online_users = data["online_users"]
 
           # cli
-          content = "#{em("Mchat Channel:")} #{channel_name}\n"
-          content << "#{rfont("online users:").green}\n"
+          content = "#{"Mchat Channel:".style.primary} #{channel_name}\n"
+          content << "#{"online users:".style.green}\n"
           online_users.each do |c|
             c = c.split(":").last # name
-            content << "* #{rfont(c).green}\n"
+            content << "* #{c.style.green}\n"
           end
           content << ""
           content << "total: #{online_users.length}.\n"

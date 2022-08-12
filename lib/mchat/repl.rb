@@ -1,6 +1,6 @@
-require "rainbow"
 require_relative "./version"
 require_relative "./api"
+require_relative "./comps/font"
 require_relative "./comps/printer"
 require_relative "./comps/welcome"
 require_relative "./comps/message"
@@ -12,6 +12,8 @@ require_relative "./commands/leave"
 require_relative "./commands/message"
 require_relative "./commands/clear"
 
+# add styles to font
+using Mchat::Font
 module Mchat
   # Core REPL class
   class Repl
@@ -65,10 +67,6 @@ module Mchat
 
     alias puts2 puts_2_printer
 
-    def bold(text)
-      em(text)
-    end
-
     def fetch_channel_task
       Thread.new do
         last_news_time = 0
@@ -105,21 +103,7 @@ module Mchat
       __send__("command_#{name}_help")
     end
 
-    def rfont(content)
-      Rainbow(content)
-    end
 
-    def em(content)
-      "#{rfont(content).bold.cyan}"
-    end
-
-    def warn(content)
-      "#{rfont(content).bold.yellow}"
-    end
-
-    def danger(content)
-      "#{rfont(content).bold.red}"
-    end
 
     def parser(raw)
       words = raw.strip
@@ -169,7 +153,7 @@ module Mchat
 
     def init_help_message
       puts "Mchat #{Mchat::VERSION}"
-      puts em("/h[elp] for help")
+      puts "/h[elp] for help".style.primary
       puts ""
     end
 

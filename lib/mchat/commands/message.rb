@@ -4,7 +4,7 @@ module Mchat
     module Message
       def command_message_help
         puts %Q(
-             #{bold("Help: Message")}
+             #{"Help: Message".style.bold}
 command: /message <message>
 explain: send your message
 

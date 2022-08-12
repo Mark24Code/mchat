@@ -4,7 +4,7 @@ module Mchat
     module Clear
       def command_clear_help
         puts %Q(
-             #{bold("Help: Clear")}
+             #{"Help: Clear".style.bold}
 command: /clear
 explain: clear chat screen.
 )

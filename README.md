@@ -41,3 +41,4 @@ The gem is available as open source under the terms of the [MIT License](https:/
 * [ ] 是否要实现一个 tail 包装命令
 * [ ] 打包下载
 * [ ] README update HOWTO
+* [ ] 指令插件化

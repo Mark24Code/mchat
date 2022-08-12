@@ -4,7 +4,7 @@ module Mchat
     module Name
       def command_name_help
         puts %Q(
-             #{bold("Help: Name")}
+             #{"Help: Name".style.bold}
 command: /name <your name in channel>
 explain: give your name in channel for chatting.
 )
@@ -19,7 +19,7 @@ explain: give your name in channel for chatting.
           data = JSON.parse(resp.body)
           code = data.fetch("code")
           if code == StatusCode::Success
-            puts em("#{user_name} is avalibale.")
+            puts "#{user_name} is avalibale.".style.primary
             @current_nickname = user_name
           else
             @current_nickname = nil

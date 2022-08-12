@@ -4,7 +4,7 @@ module Mchat
     module Quit
       def command_quit_help
         puts %Q(
-             #{bold("Help: Quit")}
+             #{"Help: Quit".style.bold}
 command: /q
 explain: quit the mchat.
 
@@ -22,7 +22,7 @@ explain: quit the mchat.
     module Help
       def command_help_help
         puts %Q(
-             #{bold("Help: Index")}
+             #{"Help: Index".style.bold}
 Choose subject to help:
 1. guide      : howto guide
 2. ch[annel]  : find channel or fetch channel info
@@ -76,7 +76,7 @@ type `/h 1` work fine too.
     module Guide
       def command_guide_help
         puts %Q(
-             #{bold("Help: Guide")}
+             #{"Help: Guide".style.bold}
 Mchat is a tiny chat software.
 
 Howto:
@@ -97,7 +97,7 @@ Howto:
 
       def command_default_help
         puts %Q(
-             #{bold("Help: Default Mode")}
+             #{"Help: Default Mode".style.bold}
 if you have joined `channel` 
 and you have a `name` in channel
 
