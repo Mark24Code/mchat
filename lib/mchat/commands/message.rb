@@ -13,11 +13,11 @@ explain: send your message
 
       def command_message(words)
         if !@current_channel
-          puts warn("You are not in channel, so you cannot message.")
-          puts warn("type `/n[ame] <your name>` before chat")  
+          puts "You are not in channel, so you cannot message.".style.warn
+          puts "type `/n[ame] <your name>` before chat".style.warn  
         elsif !@current_nickname
-          puts warn("You must register a name to this channel")
-          puts warn("type `/n[ame] <your name>` before chat")
+          puts "You must register a name to this channel".style.warn
+          puts "type `/n[ame] <your name>` before chat".style.warn
         elsif @current_channel && @current_nickname
           resp = ::Mchat::Api.create_channel_message(@current_channel, @current_nickname, words)
           code = JSON.parse(resp.body).fetch("code")

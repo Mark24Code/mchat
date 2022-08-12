@@ -19,10 +19,10 @@ explain: leave channel and delete your name.
             puts "#{@current_nickname} leave success.".style.primary
             @current_nickname = nil
           else
-            puts warn("leave request connect fail. try again.")
+            puts "leave request connect fail. try again.".style.warn
           end
         else
-          puts warn("You are not have name in channel. Not need leave.")
+          puts "You are not have name in channel. Not need leave.".style.warn
         end
       end
 

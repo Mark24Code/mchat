@@ -12,8 +12,8 @@ explain: give your name in channel for chatting.
 
       def command_name(user_name = nil)
         if @current_nickname
-          puts warn("You have `name` and active in this channel now.")
-          puts warn("Please leave this channel then change your name.")
+          puts "You have `name` and active in this channel now.".style.warn
+          puts "Please leave this channel then change your name.".style.warn
         else
           resp = ::Mchat::Api.join_channel( @current_channel , user_name)
           data = JSON.parse(resp.body)
@@ -23,7 +23,7 @@ explain: give your name in channel for chatting.
             @current_nickname = user_name
           else
             @current_nickname = nil
-            puts warn("#{user_name} has been used in channel: #{@current_channel}\ntry rename.")
+            puts "#{user_name} has been used in channel: #{@current_channel}\ntry rename.".style.warn
           end
         end
       end

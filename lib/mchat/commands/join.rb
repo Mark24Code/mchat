@@ -13,7 +13,7 @@ explain: join the channel
 
       def command_join(channel_name = nil)
         if !channel_name
-          puts warn("channel_name missing !\n type`/join <channel_name>`")
+          puts "channel_name missing !\n type`/join <channel_name>`".style.warn
         else
           # TODO channel password
           # TODO channel 白名单
@@ -25,7 +25,7 @@ explain: join the channel
             @current_channel = channel_name
             fetch_channel_task
           else
-            puts warn("Channel: #{channel_name} not found!")
+            puts "Channel: #{channel_name} not found!".style.warn
           end
         end
       end

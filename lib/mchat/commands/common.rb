@@ -110,9 +110,9 @@ you can send message without /m  command, that's default mode.
         if @current_channel && @current_nickname
           command_message(words)
         else
-          puts warn("Oops.. This is `Default Mode`:")
-          puts warn("if you join channel and have name, it will send message.")
-          puts warn("Do nothing. maybe you need join channel or use commands. try /h for more.")
+          puts "Oops.. This is `Default Mode`:".style.warn
+          puts "if you join channel and have name, it will send message.".style.warn
+          puts "Do nothing. maybe you need join channel or use commands. try /h for more.".style.warn
         end
       end
 

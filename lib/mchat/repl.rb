@@ -126,7 +126,7 @@ module Mchat
       when "/clear", '/c'
         dispatch_command("clear")
       when %r{^/([a-zA-Z]+)\s{1}([^s]+.*?)}, %r{^/([a-zA-Z]+)$}
-        puts warn("[Mchat] `/#{$1}`command not found.")
+        puts "[Mchat] `/#{$1}`command not found.".style.warn
       else
         dispatch_command("default", words)
       end
