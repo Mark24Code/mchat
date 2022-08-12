@@ -16,7 +16,7 @@ explain: login the channel
         if !channel_name
           # 返回全部节点
           resp = ::Mchat::Api.get_channels
-          all_channels = JSON.parse(resp.body).fetch("data")
+          all_channels = resp.fetch("data")
 
           # cli
           content = "Mchat Channels:\n".style.primary
@@ -33,7 +33,7 @@ explain: login the channel
         else
           # 指定节点
           resp = ::Mchat::Api.get_channel(channel_name)
-          data = JSON.parse(resp.body).fetch("data")
+          data = resp.fetch("data")
 
           online_users = data["online_users"]
 

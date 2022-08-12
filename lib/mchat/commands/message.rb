@@ -20,7 +20,7 @@ explain: send your message
           puts "type `/n[ame] <your name>` before chat".style.warn
         elsif @current_channel && @current_nickname
           resp = ::Mchat::Api.create_channel_message(@current_channel, @current_nickname, words)
-          code = JSON.parse(resp.body).fetch("code")
+          code = resp.fetch("code")
 
           if code != StatusCode::Success
             puts warn "Send Message Fail:"

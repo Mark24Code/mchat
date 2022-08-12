@@ -1,4 +1,5 @@
-require 'httparty'
+require "json"
+require "httparty"
 
 module StatusCode
   
@@ -22,11 +23,11 @@ end
 module SafeProtect
   refine String do
     def safe
-      self.strip.dump[1 .. -2]
+      json_parse self.strip.dump[1 .. -2]
     end
 
     def escape
-      self.dump[1 .. -2]
+      json_parse self.dump[1 .. -2]
     end
 
     def unescape
@@ -66,43 +67,47 @@ module Mchat
       @headers = {"Accept": "application/json"}
     end
 
+    def json_parse(resp)
+      JSON.parse(resp.body)
+    end
+
     def server_home
-      self.class.get("/")
+      json_parse self.class.get("/")
     end
 
     def ping_server
-      self.class.get("/ping")
+      json_parse self.class.get("/ping")
     end
 
     def get_server_timestamp
-      self.class.get("/timestamp")
+      json_parse self.class.get("/timestamp")
     end
 
     def conn_server_startup
-      self.class.get("/startup")
+      json_parse self.class.get("/startup")
     end
 
     def get_channels
       # 获得 channels列表
-      self.class.get("/channels")
+      json_parse self.class.get("/channels")
     end
 
     def get_channel(channel_name)
       # 获得 channels 详情
-      self.class.get("/channels/#{channel_name}")
+      json_parse self.class.get("/channels/#{channel_name}")
     end
 
     def create_channel(channel_name)
       # 创建用户频道
-      self.class.post("/channels/#{channel_name}")
+      json_parse self.class.post("/channels/#{channel_name}")
     end
 
     def delete_channel(channel_name)
-      self.class.delete("/channels/#{channel_name}")
+      json_parse self.class.delete("/channels/#{channel_name}")
     end
 
     def join_channel(channel_name, user_name)
-      self.class.post(
+      json_parse self.class.post(
         "/channels/#{channel_name}/join",
         body: { user_name: user_name }.to_json,
         headers: @headers
@@ -110,7 +115,7 @@ module Mchat
     end
 
     def leave_channel(channel_name, user_name)
-      self.class.post(
+      json_parse self.class.post(
         "/channels/#{channel_name}/leave",
         body: { user_name: user_name }.to_json,
         headers: @headers
@@ -118,7 +123,7 @@ module Mchat
     end
 
     def ping_channel(channel_name, user_name)
-      self.class.post(
+      json_parse self.class.post(
         "/channels/#{channel_name}/ping",
         body: { user_name: user_name }.to_json,
         headers: @headers
@@ -126,7 +131,7 @@ module Mchat
     end
 
     def create_channel_message(channel_name, user_name, content)
-      self.class.post(
+      json_parse self.class.post(
         "/channels/#{channel_name}/messages",
         body: { 
           user_name: user_name,
@@ -137,7 +142,7 @@ module Mchat
     end
 
     def fetch_channel_message(channel_name)
-      self.class.get(
+      json_parse self.class.get(
         "/channels/#{channel_name}/messages",
         headers: @headers
       )

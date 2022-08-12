@@ -11,13 +11,12 @@ explain: leave channel and delete your name.
       end
 
       def command_leave
-        if @current_nickname
-          resp = ::Mchat::Api.leave_channel( @current_channel , @current_nickname)
-          data = JSON.parse(resp.body)
-          code = data.fetch("code")
+        if @repl.current_nickname
+          resp = ::Mchat::Api.leave_channel( @repl.current_channel , @repl.current_nickname)
+          code = resp.fetch("code")
           if code == StatusCode::Success
-            puts "#{@current_nickname} leave success.".style.primary
-            @current_nickname = nil
+            puts "#{@repl.current_nickname} leave success.".style.primary
+            @repl.current_nickname = nil
           else
             puts "leave request connect fail. try again.".style.warn
           end
@@ -31,21 +30,37 @@ explain: leave channel and delete your name.
 end
 
 
-# module Mchat
-#   class Command
-#   end
+module Mchat
+  class Command
+  end
 
-#   class LeaveCommand
-#     def initialize
+  class LeaveCommand
+    def initialize(repl)
+      @repl = repl 
+    end
 
-#     end
+    def help
+%Q(
+#{"Help: Leave".style.primary}
+command: /leave
+explain: leave channel and delete your name.
 
-#     def help
-#         puts %Q(
-# #{"Help: Leave".style.bold}
-# command: /leave
-# explain: leave channel and delete your name.
-# )
-#     end
-#   end
-# end
+)
+    end
+
+    def command
+      if @repl.current_nickname
+        resp = ::Mchat::Api.leave_channel( @repl.current_channel , @repl.current_nickname)
+        code = resp.fetch("code")
+        if code == StatusCode::Success
+          puts "#{@repl.current_nickname} leave success.".style.primary
+          @repl.current_nickname = nil
+        else
+          puts "leave request connect fail. try again.".style.warn
+        end
+      else
+        puts "You are not have name in channel. Not need leave.".style.warn
+      end
+    end
+  end
+end

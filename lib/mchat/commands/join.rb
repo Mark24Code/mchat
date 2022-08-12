@@ -18,7 +18,7 @@ explain: join the channel
           # TODO channel password
           # TODO channel 白名单
           resp = ::Mchat::Api.get_channels
-          all_channels = JSON.parse(resp.body).fetch("data")
+          all_channels = resp.fetch("data")
 
           if all_channels.any? channel_name
             mchat_action("join channel: #{channel_name}")

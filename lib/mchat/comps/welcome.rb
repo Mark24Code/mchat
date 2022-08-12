@@ -8,7 +8,7 @@ module Mchat
 
     def conn_server
       resp = ::Mchat::Api.conn_server_startup
-      startup_msg = JSON.parse(resp.body).fetch("data")
+      startup_msg = resp.fetch("data")
       return Message.new(startup_msg).display
     end
 

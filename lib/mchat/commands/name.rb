@@ -16,8 +16,7 @@ explain: give your name in channel for chatting.
           puts "Please leave this channel then change your name.".style.warn
         else
           resp = ::Mchat::Api.join_channel( @current_channel , user_name)
-          data = JSON.parse(resp.body)
-          code = data.fetch("code")
+          code = resp.fetch("code")
           if code == StatusCode::Success
             puts "#{user_name} is avalibale.".style.primary
             @current_nickname = user_name

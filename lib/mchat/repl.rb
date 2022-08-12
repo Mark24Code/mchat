@@ -22,6 +22,9 @@ require_relative "./commands/clear"
 module Mchat
   # Core REPL class
   class Repl
+
+    attr_accessor :current_channel
+    attr_accessor :current_nicknamel
     def initialize
       # TODO use config
       # read config
@@ -77,7 +80,7 @@ module Mchat
         last_news_time = 0
         while @current_channel && @channel_message_poll_running
           resp = ::Mchat::Api.fetch_channel_message(@current_channel)
-          data = JSON.parse(resp.body).fetch("data")
+          data = resp.fetch("data")
           messages = data["messages"] || []
 
           news = messages.select { |m| m["timestamp"].to_i > last_news_time.to_i }
