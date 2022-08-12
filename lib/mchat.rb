@@ -7,4 +7,4 @@ module Mchat
   # Your code goes here...
 end
 
-require_relative "./mchat/client"
+require_relative "./mchat/repl"
