@@ -19,10 +19,6 @@ module Mchat
       @printer.display(content)
     end
 
-    def rfont(content)
-      Rainbow(content)
-    end
-
     alias :puts2 :puts_2_printer
 
     def command_channel(channel)
@@ -119,23 +115,27 @@ puts help_text
       end
     end
 
+    def rfont(content)
+      Rainbow(content)
+    end
+
     def em(content)
-      Rainbow(content).bold.cyan
+      rfont(content).bold.cyan
     end
 
     def warn(content)
-      Rainbow(content).bold.yellow
+      rfont(content).bold.yellow
     end
 
     def danger(content)
-      Rainbow(content).bold.red
+      rfont(content).bold.red
     end
 
     def parser(raw)
       words = raw.strip
       case words
       when '/help', '/h'
-        dispatcher('help', nil)
+        dispatcher('help')
       when /^\/help\s{1}(.*)/, /^\/h\s{1}(.*)/
         dispatcher('help', $1)
       when /^\/channel\s{1}(.*)/, /^\/ch\s{1}(.*)/
