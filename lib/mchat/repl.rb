@@ -30,7 +30,7 @@ module Mchat
     end
 
     def command_help(subject = nil)
-      bold = -> (text) { rfont(text).bold }
+      bold = -> (text) { em(text) }
 help_index_text = %Q{
 #{bold.("Help: Index") }
 Choose subject to help:
@@ -119,8 +119,16 @@ puts help_text
       end
     end
 
+    def em(content)
+      Rainbow(content).bold.cyan
+    end
+
     def warn(content)
       Rainbow(content).bold.yellow
+    end
+
+    def danger(content)
+      Rainbow(content).bold.red
     end
 
     def parser(raw)
@@ -160,7 +168,7 @@ puts help_text
 
     def init_help_message
       puts "Mchat v1.0.0"
-      puts "/h[elp] for help"
+      puts em("/h[elp] for help")
       puts ""
     end
 
