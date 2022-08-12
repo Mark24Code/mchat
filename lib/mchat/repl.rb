@@ -2,214 +2,12 @@ require_relative "./share"
 require_relative "./printer"
 require_relative "./message"
 require "rainbow"
+require_relative "./commands/common"
+require_relative "./commands/channel"
+require_relative "./commands/join"
+require_relative "./commands/message"
+
 module MiniChat
-  module Commands
-
-    # Command Quit
-    module Quit
-      def command_quit_help
-        puts %Q(
-             #{bold("Help: Quit")}
-command: /q
-explain: quit the mchat.
-
-)
-      end
-
-      def command_quit
-        puts "Bye :D"
-        # TODO exit life cycle
-        exit 0
-      end
-    end
-
-    # Command Help
-    module Help
-      def command_help_help
-        puts %Q(
-             #{bold("Help: Index")}
-Choose subject to help:
-1. guide
-2. ch[annel]
-3. j[oin]
-4. m[essage]
-   q[uit]
-   h[elp]
-
-e.g:
-type `/h guide` you will find guide guide.
-type `/h 1` work fine too.
-
-)
-      end
-
-      def command_help(subject = nil)
-
-        if subject == nil
-          help_dispatcher "help"
-        else
-          case subject.strip
-          when "guide", "1"
-            help_dispatcher "guide"
-          when "channel", "ch", "2"
-            help_dispatcher "channel"
-          when "join", "j", "3"
-            help_dispatcher "join"
-          when "message", "m", "4"
-            help_dispatcher "message"
-          when "quit", "q"
-            help_dispatcher "quit"
-          when "help", "h"
-            help_dispatcher "help"
-          else
-            help_dispatcher "default"
-          end
-        end
-      end
-    end
-
-    # Command Guide
-    module Guide
-      def command_guide_help
-        puts %Q(
-             #{bold("Help: Guide")}
-Minichat is a tiny chat software.
-
-Howto:
-
-.....
-
-
-)
-      end
-
-      def command_guide
-        puts "TODO run command guide"
-      end
-    end
-
-    # Command Channel
-    module Channel
-      def command_channel_help
-        puts %Q(
-             #{bold("Help: Channel")}
-command: /channel <channel_name>
-explain: login the channel
-
-)
-      end
-
-      def command_channel(channel_name = nil)
-        if !channel_name
-          # 返回全部节点
-          resp = ::MiniChat::Api.get_channels
-          all_channels = JSON.parse(resp.body).fetch("data")
-
-          # cli
-          content = em("Minichat Channels:\n")
-          all_channels.each do |c|
-            content << "* #{c}\n"
-          end
-          content << ""
-          content << "type `/join <channel_name>` to join the channel.\n"
-          puts content
-
-          # printer
-          mchat_action("fetch all channels")
-          # puts2 content
-        else
-          # 指定节点
-          resp = ::MiniChat::Api.get_channel(channel_name)
-          data = JSON.parse(resp.body).fetch("data")
-
-          online_users = data["online_users"]
-
-          # cli
-          content = "#{em("Minichat Channel:")} #{channel_name}\n"
-          content << "#{rfont("online users:").green}\n"
-          online_users.each do |c|
-            c = c.split(":").last # name
-            content << "* #{rfont(c).green}\n"
-          end
-          content << ""
-          content << "total: #{online_users.length}.\n"
-          puts content
-
-          # printer
-          mchat_action("channel #{channel_name} info:")
-          # puts2 content
-        end
-      end
-    end
-
-    # Command Join
-    module Join
-      def command_join_help
-        puts %Q(
-             #{bold("Help: Join")}
-command: /join <channel_name>
-explain: join the channel
-
-)
-      end
-
-      def command_join(channel_name = nil)
-        if !channel_name
-          puts warn("channel_name missing !\n type`/join <channel_name>`")
-        else
-          # TODO channel password
-          # TODO channel 白名单
-          resp = ::MiniChat::Api.get_channels
-          all_channels = JSON.parse(resp.body).fetch("data")
-
-          if all_channels.any? channel_name
-            mchat_action("join channel: #{channel_name}")
-            @current_channel = channel_name
-            fetch_channel_task
-          else
-            puts warn("Channel: #{channel_name} not found!")
-          end
-        end
-      end
-
-    end
-
-    # Command Message
-    module Message
-      def command_message_help
-        puts %Q(
-             #{bold("Help: Message")}
-command: /message <message>
-explain: send your message
-
-)
-      end
-
-      def command_message(words)
-        # TODO send to server
-        # puts2("#{Message.new(words).display}")
-      end
-    end
-
-    # Command Default
-    module Default
-
-      def command_default_help
-        puts %Q(
-             #{bold("Help: Default")}
-there is nothing
-
-)
-      end
-
-      def command_default(words)
-        puts "[default]#{words}"
-      end
-
-    end
-
-  end
-
   # Core REPL class
   class Repl
     def initialize
@@ -231,6 +29,7 @@ there is nothing
     include MiniChat::Commands::Message
     include MiniChat::Commands::Default
     include MiniChat::Commands::Help
+    include MiniChat::Commands::Quit
 
     def puts_2_printer(content)
       @printer.display(content)
@@ -299,15 +98,15 @@ there is nothing
     end
 
     def em(content)
-      "#{rfont(content).boldcyan}"
+      "#{rfont(content).bold.cyan}"
     end
 
     def warn(content)
-      "#{rfont(content).boldyellow}"
+      "#{rfont(content).bold.yellow}"
     end
 
     def danger(content)
-      "#{rfont(content).boldred}"
+      "#{rfont(content).bold.red}"
     end
 
     def parser(raw)
