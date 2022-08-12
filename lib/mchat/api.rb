@@ -18,7 +18,7 @@ end
 
 using SafeProtect
 
-module Client
+module Mchat
 
   module StatusCode
     # 2000 success
@@ -125,6 +125,6 @@ module Client
     end
   end
 
-  Api = ::Client::Request.new
+  Api = ::Mchat::Request.new
 
 end

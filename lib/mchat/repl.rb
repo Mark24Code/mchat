@@ -5,7 +5,9 @@ require "rainbow"
 module Mchat
   class Repl
     def initialize
+      # TODO use config
       # read config
+      @wait_prefix = "u>>"
       @display_welcome = true
       @output = './chat.log'
       @printer = Printer.new(@output)
@@ -13,7 +15,7 @@ module Mchat
 
     include Mchat::Share
 
-    def display(content)
+    def puts_2_printer(content)
       @printer.display(content)
     end
 
@@ -21,7 +23,7 @@ module Mchat
       Rainbow(content)
     end
 
-    alias :dy :display
+    alias :puts2 :puts_2_printer
 
     def command_channel(channel)
       puts "command_channel #{channel}"
@@ -102,7 +104,7 @@ puts help_text
 
     def command_message(words)
       # TODO send to server
-      # dy("#{Message.new(words).display}")
+      # puts2("#{Message.new(words).display}")
     end
 
     def command_default(words)
@@ -144,8 +146,7 @@ puts help_text
 
     def tick
       #   begin
-          printf "u>>"
-          typein = gets
+          printf @wait_prefix; typein = gets
           # puts "===[debug+]==="
           # p typein
           # puts "===[debug-]==="
@@ -164,8 +165,12 @@ puts help_text
     end
 
     def before_loop_setup
-      dy welcome(@display_welcome)
+      # cli
+      puts welcome(@display_welcome)
       init_help_message
+      # chat printer
+      puts2 welcome(@display_welcome)
+      puts2 conn_server
     end
 
     def run

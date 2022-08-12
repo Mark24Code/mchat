@@ -8,6 +8,12 @@ module Mchat
       end
     end
 
+    def conn_server
+      resp = ::Mchat::Api.conn_server_startup
+      startup_msg = JSON.parse(resp.body).fetch("data")
+      return Message.new(startup_msg).display
+    end
+
     def display_ascii_art
       # https://rubygems.org/gems/artii
 content = <<-'EOF'
@@ -19,9 +25,6 @@ content = <<-'EOF'
  |_|  |_|\___|_| |_|\__,_|\__|
                     
 EOF
-      resp = ::Client::Api.conn_server_startup
-      startup_msg = JSON.parse(resp.body).fetch("data")
-      return [content, Message.new(startup_msg).display]
     end
   end
 end
