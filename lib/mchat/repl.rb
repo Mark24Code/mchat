@@ -1,4 +1,5 @@
 require "rainbow"
+require_relative "./version"
 require_relative "./share"
 require_relative "./status_code"
 require_relative "./printer"
@@ -167,7 +168,7 @@ module Mchat
     end
 
     def init_help_message
-      puts "Mchat v1.0.0"
+      puts "Mchat #{Mchat::VERSION}"
       puts em("/h[elp] for help")
       puts ""
     end
