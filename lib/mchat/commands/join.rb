@@ -1,4 +1,4 @@
-module MiniChat
+module Mchat
   module Commands
     # Command Join
     module Join
@@ -17,7 +17,7 @@ explain: join the channel
         else
           # TODO channel password
           # TODO channel 白名单
-          resp = ::MiniChat::Api.get_channels
+          resp = ::Mchat::Api.get_channels
           all_channels = JSON.parse(resp.body).fetch("data")
 
           if all_channels.any? channel_name

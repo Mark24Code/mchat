@@ -1,4 +1,4 @@
-module MiniChat
+module Mchat
 
   module Commands
     # Command Channel
@@ -15,11 +15,11 @@ explain: login the channel
       def command_channel(channel_name = nil)
         if !channel_name
           # 返回全部节点
-          resp = ::MiniChat::Api.get_channels
+          resp = ::Mchat::Api.get_channels
           all_channels = JSON.parse(resp.body).fetch("data")
 
           # cli
-          content = em("Minichat Channels:\n")
+          content = em("Mchat Channels:\n")
           all_channels.each do |c|
             content << "* #{c}\n"
           end
@@ -32,13 +32,13 @@ explain: login the channel
           # puts2 content
         else
           # 指定节点
-          resp = ::MiniChat::Api.get_channel(channel_name)
+          resp = ::Mchat::Api.get_channel(channel_name)
           data = JSON.parse(resp.body).fetch("data")
 
           online_users = data["online_users"]
 
           # cli
-          content = "#{em("Minichat Channel:")} #{channel_name}\n"
+          content = "#{em("Mchat Channel:")} #{channel_name}\n"
           content << "#{rfont("online users:").green}\n"
           online_users.each do |c|
             c = c.split(":").last # name

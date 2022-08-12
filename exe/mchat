@@ -2,4 +2,4 @@
 
 require_relative "../lib/mchat"
 
-::MiniChat::Client.new.run
+::Mchat::Client.new.run

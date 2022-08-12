@@ -1,8 +1,4 @@
-require_relative "../share"
-require_relative "../printer"
-require_relative "../message"
-require "rainbow"
-module MiniChat
+module Mchat
   module Commands
     # Command Quit
     module Quit
@@ -45,23 +41,23 @@ type `/h 1` work fine too.
       def command_help(subject = nil)
 
         if subject == nil
-          help_dispatcher "help"
+          dispatch_help "help"
         else
           case subject.strip
           when "guide", "1"
-            help_dispatcher "guide"
+            dispatch_help "guide"
           when "channel", "ch", "2"
-            help_dispatcher "channel"
+            dispatch_help "channel"
           when "join", "j", "3"
-            help_dispatcher "join"
+            dispatch_help "join"
           when "message", "m", "4"
-            help_dispatcher "message"
+            dispatch_help "message"
           when "quit", "q"
-            help_dispatcher "quit"
+            dispatch_help "quit"
           when "help", "h"
-            help_dispatcher "help"
+            dispatch_help "help"
           else
-            help_dispatcher "default"
+            dispatch_help "default"
           end
         end
       end
@@ -72,7 +68,7 @@ type `/h 1` work fine too.
       def command_guide_help
         puts %Q(
              #{bold("Help: Guide")}
-Minichat is a tiny chat software.
+Mchat is a tiny chat software.
 
 Howto:
 

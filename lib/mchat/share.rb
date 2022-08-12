@@ -1,6 +1,6 @@
 require_relative './api'
 require_relative './message'
-module MiniChat
+module Mchat
   module Share
     def welcome(switch)
       if switch
@@ -9,7 +9,7 @@ module MiniChat
     end
 
     def conn_server
-      resp = ::MiniChat::Api.conn_server_startup
+      resp = ::Mchat::Api.conn_server_startup
       startup_msg = JSON.parse(resp.body).fetch("data")
       return Message.new(startup_msg).display
     end

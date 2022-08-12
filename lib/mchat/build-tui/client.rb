@@ -6,12 +6,12 @@ require_relative './message'
 require_relative './message_queue'
 require_relative './share'
 require_relative './api'
-module MiniChat
+module Mchat
   class ChatListView
     attr :id, :data
     def initialize(id)
       @id = id
-      @message_queue = ::MiniChat::MessageQueue.new
+      @message_queue = ::Mchat::MessageQueue.new
       @size = 20
 
       # test
@@ -110,5 +110,5 @@ end
 
 if __FILE__ == $0
   # just for develop
-  ::MiniChat::Client.new.run
+  ::Mchat::Client.new.run
 end

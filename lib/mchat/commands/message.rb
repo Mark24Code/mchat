@@ -1,4 +1,4 @@
-module MiniChat
+module Mchat
   module Commands
     # Command Message
     module Message

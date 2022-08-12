@@ -1,13 +1,13 @@
+require "rainbow"
 require_relative "./share"
 require_relative "./printer"
 require_relative "./message"
-require "rainbow"
 require_relative "./commands/common"
 require_relative "./commands/channel"
 require_relative "./commands/join"
 require_relative "./commands/message"
 
-module MiniChat
+module Mchat
   # Core REPL class
   class Repl
     def initialize
@@ -22,14 +22,14 @@ module MiniChat
       @nickname = nil
     end
 
-    include MiniChat::Share
-    include MiniChat::Commands::Guide
-    include MiniChat::Commands::Channel
-    include MiniChat::Commands::Join
-    include MiniChat::Commands::Message
-    include MiniChat::Commands::Default
-    include MiniChat::Commands::Help
-    include MiniChat::Commands::Quit
+    include Mchat::Share
+    include Mchat::Commands::Guide
+    include Mchat::Commands::Channel
+    include Mchat::Commands::Join
+    include Mchat::Commands::Message
+    include Mchat::Commands::Default
+    include Mchat::Commands::Help
+    include Mchat::Commands::Quit
 
     def puts_2_printer(content)
       @printer.display(content)
@@ -37,7 +37,7 @@ module MiniChat
 
     def mchat_speak(content)
       puts2 Message.new({
-                          "user_name" => "Minichat",
+                          "user_name" => "Mchat",
                           "timestamp" => Time.now.to_i,
                           "content" => content
                         }).display
@@ -45,7 +45,7 @@ module MiniChat
 
     def mchat_action(content)
       puts2 Message.new({
-                          "user_name" => "Minichat [action]",
+                          "user_name" => "Mchat [action]",
                           "timestamp" => Time.now.to_i,
                           "content" => content
                         }).display
@@ -61,7 +61,7 @@ module MiniChat
       Thread.new do
         last_news_time = 0
         while @current_channel
-          resp = ::MiniChat::Api.fetch_channel_message(@current_channel)
+          resp = ::Mchat::Api.fetch_channel_message(@current_channel)
           data = JSON.parse(resp.body).fetch("data")
           messages = data["messages"] || []
 
@@ -81,7 +81,7 @@ module MiniChat
       end
     end
 
-    def command_dispatcher(name, content = nil)
+    def dispatch_command(name, content = nil)
       if content
         __send__("command_#{name}", content)
       else
@@ -89,7 +89,7 @@ module MiniChat
       end
     end
 
-    def help_dispatcher(name)
+    def dispatch_help(name)
       __send__("command_#{name}_help")
     end
 
@@ -114,19 +114,19 @@ module MiniChat
       pattern_factory = ->(keyword) { %r{^/#{keyword}\s{1}([^s]+.*?)} }
       case words
       when pattern_factory.call("help"), pattern_factory.call("h"), "/help", "/h"
-        command_dispatcher("help", $1)
+        dispatch_command("help", $1)
       when pattern_factory.call("channel"), pattern_factory.call("ch"), "/channel", "/ch"
-        command_dispatcher("channel", $1)
+        dispatch_command("channel", $1)
       when pattern_factory.call("join"), pattern_factory.call("j"), "/join", "/j"
-        command_dispatcher("join", $1)
+        dispatch_command("join", $1)
       when pattern_factory.call("message"), pattern_factory.call("m"), "/message", "/m"
-        command_dispatcher("message", $1)
+        dispatch_command("message", $1)
       when "/quit", "/q"
-        command_dispatcher("quit")
+        dispatch_command("quit")
       when %r{^/([a-zA-Z]+)\s{1}([^s]+.*?)}, %r{^/([a-zA-Z]+)$}
-        puts warn("[MiniChat] `/#{$1}`command not found.")
+        puts warn("[Mchat] `/#{$1}`command not found.")
       else
-        command_dispatcher("default", words)
+        dispatch_command("default", words)
       end
     end
 
@@ -146,7 +146,7 @@ module MiniChat
     end
 
     def init_help_message
-      puts "MiniChat v1.0.0"
+      puts "Mchat v1.0.0"
       puts em("/h[elp] for help")
       puts ""
     end
@@ -171,4 +171,4 @@ module MiniChat
 
 end
 
-MiniChat::Repl.new.run
+Mchat::Repl.new.run
