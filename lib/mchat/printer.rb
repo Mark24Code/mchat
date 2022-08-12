@@ -17,7 +17,7 @@ module Mchat
 
     def write_to(content_arr)
       File.open(@output, 'w+') do |f|
-        content_arr.each { |line| f << "#{line}\n" }
+        content_arr.each { |line| f << "#{line}" }
       end
     end
   end

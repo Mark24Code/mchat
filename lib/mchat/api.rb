@@ -110,8 +110,8 @@ module Mchat
       self.class.post(
         "/channels/#{channel_name}/messages",
         body: { 
-          user_name: user_name.safe,
-          content: content.safe
+          user_name: user_name,
+          content: content
         }.to_json,
         headers: @headers
       )
