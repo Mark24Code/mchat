@@ -28,7 +28,8 @@ Choose subject to help:
 2. ch[annel]  : find channel or fetch channel info
 3. j[oin]     : join a channel
 4. n[ame]     : register a name in channel for chatting
-5. m[essage]  : send message in channel
+5. l[eave]    : delete name in channel
+6. m[essage]  : send message in channel
    q[uit]     : quit mchat
    h[elp]     : find help
 
@@ -53,7 +54,9 @@ type `/h 1` work fine too.
             dispatch_help "join"
           when "name", "n", "4"
             dispatch_help "name"
-          when "message", "m", "5"
+          when "leave", "l", "5"
+            dispatch_help "leave"
+          when "message", "m", "6"
             dispatch_help "message"
           when "quit", "q"
             dispatch_help "quit"

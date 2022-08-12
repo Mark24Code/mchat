@@ -7,6 +7,7 @@ require_relative "./commands/common"
 require_relative "./commands/channel"
 require_relative "./commands/join"
 require_relative "./commands/name"
+require_relative "./commands/leave"
 require_relative "./commands/message"
 
 module Mchat
@@ -30,6 +31,7 @@ module Mchat
     include Mchat::Commands::Channel
     include Mchat::Commands::Join
     include Mchat::Commands::Name
+    include Mchat::Commands::Leave
     include Mchat::Commands::Message
     include Mchat::Commands::Default
     include Mchat::Commands::Help
@@ -125,6 +127,8 @@ module Mchat
         dispatch_command("join", $1)
       when pattern_factory.call("name"), pattern_factory.call("n"), "/name", "/n"
         dispatch_command("name", $1)
+      when "/leave", "/l"
+        dispatch_command("leave")
       when pattern_factory.call("message"), pattern_factory.call("m"), "/message", "/m"
         dispatch_command("message", $1)
       when "/quit", "/q"
