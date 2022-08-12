@@ -1,4 +1,4 @@
-module Mchat
+module MiniChat
 
   class Printer
     def initialize(output)

@@ -4,7 +4,7 @@ require_relative "lib/mchat/version"
 
 Gem::Specification.new do |spec|
   spec.name = "mchat"
-  spec.version = Mchat::VERSION
+  spec.version = MiniChat::VERSION
   spec.authors = ["Mark24"]
   spec.email = ["mark.zhangyoung@qq.com"]
 

@@ -18,7 +18,7 @@ end
 
 using SafeProtect
 
-module Mchat
+module MiniChat
 
   module StatusCode
     # 2000 success
@@ -125,6 +125,6 @@ module Mchat
     end
   end
 
-  Api = ::Mchat::Request.new
+  Api = ::MiniChat::Request.new
 
 end

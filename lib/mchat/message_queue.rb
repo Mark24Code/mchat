@@ -1,4 +1,4 @@
-module Mchat
+module MiniChat
   class MessageQueue
     attr_accessor :messages, :scroll_offset, :view_size
     def initialize(opt = {})

@@ -2,7 +2,7 @@
 
 require_relative "mchat/version"
 
-module Mchat
+module MiniChat
   class Error < StandardError; end
   # Your code goes here...
 end

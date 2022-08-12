@@ -1,6 +1,6 @@
 require "rainbow"
 
-module Mchat
+module MiniChat
   class Message
     def initialize(message, format = :std)
       @message = message

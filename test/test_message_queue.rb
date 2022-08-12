@@ -5,11 +5,11 @@ require "mchat/message_queue"
 
 class TestMchat < Minitest::Test
   def test_msg_queue
-    refute_nil ::Mchat::MessageQueue.new
+    refute_nil ::MiniChat::MessageQueue.new
   end
 
   def test_queue_push_and_length
-    q = ::Mchat::MessageQueue.new
+    q = ::MiniChat::MessageQueue.new
     q.push(1)
     q.push(2)
     assert_equal 2, q.length
@@ -19,25 +19,25 @@ class TestMchat < Minitest::Test
   end
 
   def test_queue_empty?
-    q = ::Mchat::MessageQueue.new
+    q = ::MiniChat::MessageQueue.new
     assert q.empty?
   end
 
   def test_queue_empty_false?
-    q = ::Mchat::MessageQueue.new
+    q = ::MiniChat::MessageQueue.new
     q.push(1)
     assert_equal false, q.empty?
   end
 
   def test_queue_all
-    q = ::Mchat::MessageQueue.new
+    q = ::MiniChat::MessageQueue.new
     q.push(1)
     q.push(2)
     assert_equal [1,2], q.all
   end
 
   def test_queue_clean
-    q = ::Mchat::MessageQueue.new
+    q = ::MiniChat::MessageQueue.new
     q.push(1)
     q.push(2)
     assert_equal [1,2], q.all
@@ -48,7 +48,7 @@ class TestMchat < Minitest::Test
   def test_virtual_message
     # 类似分页指定数字返回
     # 数据累计依赖外部维持，内部是无状态，纯计算返回
-    q = ::Mchat::MessageQueue.new({view_size:2})
+    q = ::MiniChat::MessageQueue.new({ view_size:2})
     q.clear
     q.push(1)
     q.push(2)

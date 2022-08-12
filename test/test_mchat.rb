@@ -4,7 +4,7 @@ require "test_helper"
 
 class TestMchat < Minitest::Test
   def test_that_it_has_a_version_number
-    refute_nil ::Mchat::VERSION
+    refute_nil ::MiniChat::VERSION
   end
 
   def test_it_does_something_useful

@@ -2,10 +2,12 @@ PATH
   remote: .
   specs:
     mchat (0.1.0)
+      curses (~> 1.4.4)
 
 GEM
   remote: https://rubygems.org/
   specs:
+    curses (1.4.4)
     httparty (0.20.0)
       mime-types (~> 3.0)
       multi_xml (>= 0.5.2)
