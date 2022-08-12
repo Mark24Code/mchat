@@ -1,4 +1,5 @@
 require_relative './api'
+require_relative './message'
 module Mchat
   module Share
     def welcome(switch)
@@ -9,7 +10,7 @@ module Mchat
 
     def display_ascii_art
       # https://rubygems.org/gems/artii
-puts <<-'EOF'
+content = <<-'EOF'
   __  __      _           _
  |  \/  |    | |         | |
  | \  / | ___| |__   __ _| |_
@@ -20,7 +21,7 @@ puts <<-'EOF'
 EOF
       resp = ::Client::Api.conn_server_startup
       startup_msg = JSON.parse(resp.body).fetch("data")
-      puts Message.new(startup_msg).display
+      return [content, Message.new(startup_msg).display]
     end
   end
 end
