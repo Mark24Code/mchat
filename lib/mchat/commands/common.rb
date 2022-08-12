@@ -97,14 +97,23 @@ Howto:
 
       def command_default_help
         puts %Q(
-             #{bold("Help: Default")}
-there is nothing
+             #{bold("Help: Default Mode")}
+if you have joined `channel` 
+and you have a `name` in channel
+
+you can send message without /m  command, that's default mode.
 
 )
       end
 
       def command_default(words)
-        puts "[default]#{words}"
+        if @current_channel && @current_nickname
+          command_message(words)
+        else
+          puts warn("Oops.. This is `Default Mode`:")
+          puts warn("if you join channel and have name, it will send message.")
+          puts warn("Do nothing. maybe you need join channel or use commands. try /h for more.")
+        end
       end
 
     end
