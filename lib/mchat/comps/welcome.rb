@@ -1,7 +1,5 @@
-require_relative './api'
-require_relative './message'
 module Mchat
-  module Share
+  module Welcome
     def welcome(switch)
       if switch
         display_ascii_art

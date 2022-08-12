@@ -1,9 +1,9 @@
 require "rainbow"
 require_relative "./version"
-require_relative "./share"
-require_relative "./status_code"
-require_relative "./printer"
-require_relative "./message"
+require_relative "./api"
+require_relative "./comps/printer"
+require_relative "./comps/welcome"
+require_relative "./comps/message"
 require_relative "./commands/common"
 require_relative "./commands/channel"
 require_relative "./commands/join"
@@ -31,7 +31,7 @@ module Mchat
       @current_nickname = nil
     end
 
-    include Mchat::Share
+    include Mchat::Welcome
     include Mchat::Commands::Guide
     include Mchat::Commands::Channel
     include Mchat::Commands::Join
