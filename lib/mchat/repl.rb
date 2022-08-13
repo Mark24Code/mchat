@@ -72,10 +72,6 @@ module Mchat
     include Mchat::Commands::Quit
     include Mchat::Commands::Clear
 
-    def puts_2_printer(content)
-      @printer.display(content)
-    end
-
     def _mchat_speak(content)
       _puts2 Message.new({
                           "user_name" => "Mchat",
@@ -91,8 +87,6 @@ module Mchat
                           "content" => content
                         }).display
     end
-
-    alias _puts2 puts_2_printer
 
     def fetch_channel_task
       Thread.new do
