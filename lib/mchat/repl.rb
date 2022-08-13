@@ -152,7 +152,8 @@ module Mchat
           command_condition = command[:command_condition]
           command_condition.each do |cc|
             if cc.match(words)
-              dispatch(command[:command_run], words)
+              content = $1 ? $1 : nil
+              dispatch(command[:command_run], content)
             end
           end
         end

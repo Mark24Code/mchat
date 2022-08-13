@@ -3,6 +3,8 @@ module Mchat
     module Quit
       def self.configure(repl)
         CommandConditions.push({
+          name: 'q[uit]',
+          description: 'quit mchat',
           help_condition: ['quit','q'],
           help_doc: :quit_help_doc,
           command_condition: ['/quit', '/q'],
