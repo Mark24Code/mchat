@@ -57,9 +57,17 @@ module Mchat
 
     include Command
 
-    Command.command :quit
-    Command.command :clear
-    Command.command :help
+    install_commands = [
+      :quit,
+      :clear,
+      :help,
+      :guide
+    ]
+
+    install_commands.each do |c|
+      Command.command c
+    end
+
 
     # Instance ########################3
 
