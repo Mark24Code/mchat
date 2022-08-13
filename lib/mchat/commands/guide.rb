@@ -3,7 +3,7 @@ module Mchat
     module Guide
       CommandConditions.push({
         name: 'guide',
-        description: 'guide & HOWTO',
+        description: "guide\t\tguide & HOWTO",
         help_condition: ['guide'],
         help_doc: :guide_help_doc,
         command_condition: ['/guide'],

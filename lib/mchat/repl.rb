@@ -61,6 +61,7 @@ module Mchat
       :help,
       :guide,
       :channel,
+      :join,
       :clear,
       :quit,
       :default

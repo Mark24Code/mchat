@@ -3,8 +3,8 @@ module Mchat
     module Channel
       def self.configure(repl)
         CommandConditions.push({
-          name: 'ch[annel]',
-          description: 'find channel list & get channel info',
+          name: 'channel',
+          description: "ch[annel]\tfind channel list & get channel info",
           help_condition: ['channel','ch'],
           help_doc: :channel_help_doc,
           command_condition: ['/channel', /\/channel (.*)/, '/ch', /\/ch (.*)/],

@@ -4,8 +4,8 @@ module Mchat
     module Clear
       def self.configure(repl)
         CommandConditions.push({
-          name: 'c[lear]',
-          description: 'clean mchat screen',
+          name: 'clear',
+          description: "c[lear]\t\tclean mchat screen",
           help_condition: ['clear','c'],
           help_doc: :clear_help_doc,
           command_condition: ['/clear', '/c'],

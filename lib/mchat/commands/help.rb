@@ -3,8 +3,8 @@ module Mchat
     module Help
       def self.configure(repl)
         CommandConditions.push({
-          name: 'h[elp]',
-          description: 'find help',
+          name: 'help',
+          description: "h[elp]\t\tfind help",
           help_condition: ['help','h'],
           help_doc: :help_help_doc,
           command_condition: ['/help', /\/help (.*)/, '/h', /\/h (.*)/],
@@ -15,7 +15,7 @@ module Mchat
         def help_help_doc
           cmd_list = ""
           CommandConditions.each do |c|
-            cmd_list << "#{c[:name]}\t\t#{c[:description]}\n"
+            cmd_list << "#{c[:description]}\n"
           end
 
           _puts %Q(
