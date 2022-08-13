@@ -58,10 +58,11 @@ module Mchat
     include Command
 
     install_commands = [
-      :quit,
-      :clear,
       :help,
       :guide,
+      :channel,
+      :clear,
+      :quit,
       :default
     ]
 
@@ -163,6 +164,7 @@ module Mchat
             if cc.match(words)
               content = $1 ? $1 : nil
               dispatch(command[:command_run], content)
+              break
             end
           end
         end

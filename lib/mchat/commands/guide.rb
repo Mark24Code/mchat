@@ -10,21 +10,23 @@ module Mchat
         command_run: :guide_command_run
       })
 
-      def guide_help_doc
-        _puts %Q(
-             #{"Help: Guide".style.bold}
-Mchat is a tiny chat software.
+      module InstanceMethods
+        def guide_help_doc
+          _puts %Q(
+               #{"Help: Guide".style.bold}
+  Mchat is a tiny chat software.
 
-Howto:
+  Howto:
 
-.....
+  .....
 
 
-)
-      end
+  )
+        end
 
-      def guide_command_run
-        _puts "TODO run command guide"
+        def guide_command_run
+          _puts "TODO run command guide"
+        end
       end
     end
     mount_command :guide, Guide
