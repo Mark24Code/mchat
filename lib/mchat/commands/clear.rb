@@ -14,10 +14,12 @@ module Mchat
       end
       module InstanceMethods
         def clear_help_doc
-          _puts %Q(
-               #{"Help: Clear".style.bold}
-  command: /clear
-  explain: clear chat screen.
+        _puts %Q(
+#{"Help: Clear".style.bold}
+
+command: /clear
+explain: clear chat screen.
+
   )
         end
 

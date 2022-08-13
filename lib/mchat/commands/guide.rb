@@ -13,13 +13,11 @@ module Mchat
       module InstanceMethods
         def guide_help_doc
           _puts %Q(
-               #{"Help: Guide".style.bold}
-  Mchat is a tiny chat software.
+#{"Help: Guide".style.bold}
 
-  Howto:
-
-  .....
-
+Mchat is a tiny chat software.
+Howto:
+.....
 
   )
         end

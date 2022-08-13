@@ -27,8 +27,7 @@ Choose subject to help:
 
 e.g:
 type `/h guide` you will find guide guide.
-type `/h 1` work fine too.
-  )
+)
         end
 
         class_eval(%Q(

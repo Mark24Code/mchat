@@ -15,9 +15,11 @@ module Mchat
       module InstanceMethods
         def name_help_doc
           _puts %Q(
-               #{"Help: Name".style.bold}
-  command: /name <your name in channel>
-  explain: give your name in channel for chatting.
+#{"Help: Name".style.bold}
+
+command: /name <your name in channel>
+explain: give your name in channel for chatting.
+
   )
         end
 

@@ -4,11 +4,12 @@ module Mchat
       module InstanceMethods
         def default_help_doc
           _puts %Q(
-               #{"Help: Default Mode".style.bold}
-      if you have joined `channel`
-      and you have a `name` in channel
+#{"Help: Default Mode".style.bold}
 
-      you can send message without /m  command, that's default mode.
+if you have joined `channel`
+and you have a `name` in channel
+
+you can send message without /m  command, that's default mode.
 
       )
         end

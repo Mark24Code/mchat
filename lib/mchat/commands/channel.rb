@@ -14,11 +14,12 @@ module Mchat
       module InstanceMethods
         def channel_help_doc
           _puts %Q(
-               #{"Help: Channel".style.bold}
-  command: /channel <channel_name>
-  explain: login the channel
+#{"Help: Channel".style.bold}
 
-  )
+command: /channel <channel_name>
+explain: login the channel
+
+)
         end
 
         def channel_command_run(channel_name = nil)

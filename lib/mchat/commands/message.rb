@@ -5,7 +5,7 @@ module Mchat
       def self.configure(repl)
         CommandConditions.push({
           name: 'message',
-          description: "m[essage]\t\tsend message in channel",
+          description: "m[essage]\tsend message in channel",
           help_condition: ['message','m'],
           help_doc: :message_help_doc,
           command_condition: ['/message', /\/message (.*)/, '/m', /\/m (.*)/],
@@ -16,6 +16,7 @@ module Mchat
         def message_help_doc
           _puts %Q(
   #{"Help: Message".style.bold}
+
   command: /message <message>
   explain: send your message
 

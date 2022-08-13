@@ -15,6 +15,7 @@ module Mchat
         def join_help_doc
           _puts %Q(
 #{"Help: Join".style.bold}
+
 command: /join <channel_name>
 explain: join the channel
 

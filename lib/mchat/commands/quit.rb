@@ -25,8 +25,10 @@ module Mchat
       end
 QuitDoc = %Q(
 #{"Help: Quit".style.bold}
+
 command: /q
 explain: quit the mchat.
+
 )
     end
     mount_command :quit, Quit
