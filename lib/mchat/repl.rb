@@ -63,6 +63,7 @@ module Mchat
       :channel,
       :join,
       :name,
+      :message,
       :clear,
       :quit,
       :default
