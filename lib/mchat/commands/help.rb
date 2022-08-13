@@ -30,24 +30,22 @@ type `/h guide` you will find guide guide.
 )
         end
 
-        class_eval(%Q(
-          def help_command_run(subject = nil)
-            if !subject
-              return help_help_doc
-            end
-            subject = subject && subject.strip
-            CommandConditions.each do |command|
-              help_condition = command[:help_condition]
-              help_condition.each do |hc|
-                if hc.match(subject)
-                  catch_subject =  $1 ? $1 : nil
-                  dispatch(command[:help_doc], catch_subject)
-                  break
-                end
+        def help_command_run(subject = nil)
+          if !subject
+            return help_help_doc
+          end
+          subject = subject && subject.strip
+          CommandConditions.each do |command|
+            help_condition = command[:help_condition]
+            help_condition.each do |hc|
+              if hc.match(subject)
+                catch_subject =  $1 ? $1 : nil
+                _dispatch(command[:help_doc], catch_subject)
+                break
               end
             end
           end
-        ))
+        end
       end
     end
     mount_command :help, Help

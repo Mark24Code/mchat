@@ -149,7 +149,7 @@ module Mchat
       end
     end
 
-    def dispatch(name, content = nil)
+    def _dispatch(name, content = nil)
       if content
         __send__(name, content)
       else
@@ -157,22 +157,19 @@ module Mchat
       end
     end
 
-    class_eval(%Q(
-      def parser(raw)
-        words = raw.strip
-        CommandConditions.each do |command|
-          command_condition = command[:command_condition]
-          command_condition.each do |cc|
-            if cc.match(words)
-              content = $1 ? $1 : nil
-              dispatch(command[:command_run], content)
-              break
-            end
+    def parser(raw)
+      words = raw.strip
+      CommandConditions.each do |command|
+        command_condition = command[:command_condition]
+        command_condition.each do |cc|
+          if cc.match(words)
+            content = $1 ? $1 : nil
+            _dispatch(command[:command_run], content)
+            break
           end
         end
       end
-    ))
-
+    end
 
     def user_hint_prefix
       printf "#{_current_channel ? '['+_current_channel+']' : '' }#{_current_nickname ? '@'+_current_nickname : '' }#{@wait_prefix}"
