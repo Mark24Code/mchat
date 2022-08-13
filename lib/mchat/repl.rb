@@ -23,8 +23,6 @@ module Mchat
   # Core REPL class
   class Repl
 
-    attr_accessor :current_channel
-    attr_accessor :current_nicknamel
     def initialize
       # TODO use config
       # read config
@@ -49,16 +47,18 @@ module Mchat
       @current_nickname
     end
 
-    def _screen_puts(content)
+    def _chat_screen_print(content)
+      # TODO add log
       @printer.display(content)
     end
 
-    def _cli_puts(content)
+    def _cli_screen_print(content)
+      # TODO add log
       puts content
     end
 
-    alias _puts  _cli_puts
-    alias __puts2 _screen_puts
+    alias _puts  _cli_screen_print
+    alias __puts2 _chat_screen_print
 
     include Mchat::Welcome
     include Mchat::Commands::Guide
