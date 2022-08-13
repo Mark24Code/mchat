@@ -1,9 +1,9 @@
 module Mchat
 
-  module Commands
+  module Command
     # Command Channel
     module Channel
-      def command_channel_help
+      def channel_help_doc
         _puts %Q(
              #{"Help: Channel".style.bold}
 command: /channel <channel_name>
@@ -12,7 +12,7 @@ explain: login the channel
 )
       end
 
-      def command_channel(channel_name = nil)
+      def _command_runchannel(channel_name = nil)
         if !channel_name
           # 返回全部节点
           resp = ::Mchat::Api.get_channels

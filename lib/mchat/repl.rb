@@ -58,6 +58,7 @@ module Mchat
     include Command
 
     Command.command :quit
+    Command.command :clear
 
     # Instance ########################3
 
@@ -164,6 +165,10 @@ module Mchat
 
     def user_hint_prefix
       printf "#{_current_channel ? '['+_current_channel+']' : '' }#{_current_nickname ? '@'+_current_nickname : '' }#{@wait_prefix}"
+    end
+
+    def _printer
+      @printer
     end
 
     def tick

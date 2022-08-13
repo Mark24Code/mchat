@@ -1,8 +1,8 @@
 module Mchat
-  module Commands
+  module Command
     # Command Quit
     module Quit
-      def command_quit_help
+      def quit_help_doc
         _puts %Q(
              #{"Help: Quit".style.bold}
 command: /q
@@ -11,7 +11,7 @@ explain: quit the mchat.
 )
       end
 
-      def command_quit
+      def _command_runquit
         _puts "Bye :D"
         # TODO exit life cycle
         exit 0
@@ -20,7 +20,7 @@ explain: quit the mchat.
 
     # Command Help
     module Help
-      def command_help_help
+      def help_help_doc
         _puts %Q(
              #{"Help: Index".style.bold}
 Choose subject to help:
@@ -41,7 +41,7 @@ type `/h 1` work fine too.
 )
       end
 
-      def command_help(subject = nil)
+      def _command_runhelp(subject = nil)
 
         if subject == nil
           dispatch_help "help"
@@ -74,7 +74,7 @@ type `/h 1` work fine too.
 
     # Command Guide
     module Guide
-      def command_guide_help
+      def guide_help_doc
         _puts %Q(
              #{"Help: Guide".style.bold}
 Mchat is a tiny chat software.
@@ -87,7 +87,7 @@ Howto:
 )
       end
 
-      def command_guide
+      def _command_runguide
         _puts "TODO run command guide"
       end
     end
@@ -95,7 +95,7 @@ Howto:
     # Command Default
     module Default
 
-      def command_default_help
+      def default_help_doc
         _puts %Q(
              #{"Help: Default Mode".style.bold}
 if you have joined `channel`
@@ -106,7 +106,7 @@ you can send message without /m  command, that's default mode.
 )
       end
 
-      def command_default(words)
+      def _command_rundefault(words)
         if _current_channel && _current_nickname
           command_message(words)
         else

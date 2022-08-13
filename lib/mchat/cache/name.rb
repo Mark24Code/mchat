@@ -1,8 +1,8 @@
 module Mchat
-  module Commands
+  module Command
     # Command Join
     module Name
-      def command_name_help
+      def name_help_doc
         _puts %Q(
              #{"Help: Name".style.bold}
 command: /name <your name in channel>
@@ -10,7 +10,7 @@ explain: give your name in channel for chatting.
 )
       end
 
-      def command_name(user_name = nil)
+      def _command_runname(user_name = nil)
         if _current_nickname
           _puts "You have `name` and active in this channel now.".style.warn
           _puts "Please leave this channel then change your name.".style.warn

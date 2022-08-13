@@ -1,8 +1,8 @@
 module Mchat
-  module Commands
+  module Command
     # Command Join
     module Join
-      def command_join_help
+      def join_help_doc
         _puts %Q(
              #{"Help: Join".style.bold}
 command: /join <channel_name>
@@ -11,7 +11,7 @@ explain: join the channel
 )
       end
 
-      def command_join(channel_name = nil)
+      def _command_runjoin(channel_name = nil)
         if !channel_name
           _puts "channel_name missing !\n type`/join <channel_name>`".style.warn
         else

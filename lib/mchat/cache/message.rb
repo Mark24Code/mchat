@@ -1,8 +1,8 @@
 module Mchat
-  module Commands
+  module Command
     # Command Message
     module Message
-      def command_message_help
+      def message_help_doc
         _puts %Q(
              #{"Help: Message".style.bold}
 command: /message <message>
@@ -11,7 +11,7 @@ explain: send your message
 )
       end
 
-      def command_message(words)
+      def _command_runmessage(words)
         if !_current_channel
           _puts "You are not in channel, so you cannot message.".style.warn
           _puts "type `/n[ame] <your name>` before chat".style.warn

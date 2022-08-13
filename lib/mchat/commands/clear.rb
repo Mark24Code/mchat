@@ -1,18 +1,30 @@
 module Mchat
-  module Commands
+  module Command
     # Command Clear
     module Clear
-      def command_clear_help
-        _puts %Q(
-             #{"Help: Clear".style.bold}
-command: /clear
-explain: clear chat screen.
-)
+      def self.configure(repl)
+        CommandConditions.push({
+          help_condition: ['clear','c'],
+          help_doc: :clear_doc_quit,
+          command_condition: ['/clear', '/c'],
+          command_run: :clear_command_run
+        })
       end
+      module InstanceMethods
+        def clear_help_doc
+          _puts %Q(
+               #{"Help: Clear".style.bold}
+  command: /clear
+  explain: clear chat screen.
+  )
+        end
 
-      def command_clear
-        @printer.clear
+        def clear_command_run(repl = nil)
+          _printer.clear
+        end
       end
     end
+
+    mount_command :clear, Clear
   end
 end
