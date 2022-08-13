@@ -11,17 +11,55 @@ require_relative "./api"
 require_relative "./comps/printer"
 require_relative "./comps/welcome"
 require_relative "./comps/message"
-require_relative "./commands/common"
-require_relative "./commands/channel"
-require_relative "./commands/join"
-require_relative "./commands/name"
-require_relative "./commands/leave"
-require_relative "./commands/message"
-require_relative "./commands/clear"
+# require_relative "./commands/common"
+# require_relative "./commands/channel"
+# require_relative "./commands/join"
+# require_relative "./commands/name"
+# require_relative "./commands/leave"
+# require_relative "./commands/message"
+# require_relative "./commands/clear"
+
+
+module Mchat
+  module Command
+    # Class ########################3
+    CommandComps = {}
+    CommandConditions = []
+
+    def self.mount_command(name, mod)
+      CommandComps[name] = mod
+    end
+
+    def self.load_command(name)
+      h = CommandComps
+      unless cmd = h[name]
+        require_relative "./commands/#{name}"
+        raise RodaError, "command #{name} did not mount itself correctly in Mchat::Command" unless cmd = h[name]
+      end
+      cmd
+    end
+
+    def self.command(cmd, *args, &block)
+      p cmd
+      cmd = Mchat::Command.load_command(cmd) if cmd.is_a?(Symbol)
+      raise MchatError, "Invalid cmd type: #{cmd.class.inspect}" unless cmd.is_a?(Module)
+
+      include(cmd::InstanceMethods) if defined?(cmd::InstanceMethods)
+      extend(cmd::ClassMethods) if defined?(cmd::ClassMethods)
+      cmd.configure(self, *args, &block) if cmd.respond_to?(:configure)
+    end
+  end
+end
 
 module Mchat
   # Core REPL class
   class Repl
+
+    include Command
+
+    Command.command :quit
+
+    # Instance ########################3
 
     def initialize
       # TODO use config
@@ -58,35 +96,19 @@ module Mchat
     end
 
     alias _puts  _cli_screen_print
-    alias __puts2 _chat_screen_print
+    alias _puts2 _chat_screen_print
 
     include Mchat::Welcome
-    include Mchat::Commands::Guide
-    include Mchat::Commands::Channel
-    include Mchat::Commands::Join
-    include Mchat::Commands::Name
-    include Mchat::Commands::Leave
-    include Mchat::Commands::Message
-    include Mchat::Commands::Default
-    include Mchat::Commands::Help
-    include Mchat::Commands::Quit
-    include Mchat::Commands::Clear
-
-    def _mchat_speak(content)
-      _puts2 Message.new({
-                          "user_name" => "Mchat",
-                          "timestamp" => Time.now.to_i,
-                          "content" => content
-                        }).display
-    end
-
-    def _mchat_action(content)
-      _puts2 Message.new({
-                          "user_name" => "Mchat [action]",
-                          "timestamp" => Time.now.to_i,
-                          "content" => content
-                        }).display
-    end
+    # include Mchat::Commands::Guide
+    # include Mchat::Commands::Channel
+    # include Mchat::Commands::Join
+    # include Mchat::Commands::Name
+    # include Mchat::Commands::Leave
+    # include Mchat::Commands::Message
+    # include Mchat::Commands::Default
+    # include Mchat::Commands::Help
+    # include Mchat::Commands::Quit
+    # include Mchat::Commands::Clear
 
     def fetch_channel_task
       Thread.new do
@@ -114,9 +136,9 @@ module Mchat
 
     def dispatch_command(name, content = nil)
       if content
-        __send__("command_#{name}", content)
+        __send__(name, content)
       else
-        __send__("command_#{name}")
+        __send__(name)
       end
     end
 
@@ -125,33 +147,20 @@ module Mchat
     end
 
 
-
-    def parser(raw)
-      words = raw.strip
-      pattern_factory = ->(keyword) { %r{^/#{keyword}\s{1}([^s]+.*?)} }
-      case words
-      when pattern_factory.call("help"), pattern_factory.call("h"), "/help", "/h"
-        dispatch_command("help", $1)
-      when pattern_factory.call("channel"), pattern_factory.call("ch"), "/channel", "/ch"
-        dispatch_command("channel", $1)
-      when pattern_factory.call("join"), pattern_factory.call("j"), "/join", "/j"
-        dispatch_command("join", $1)
-      when pattern_factory.call("name"), pattern_factory.call("n"), "/name", "/n"
-        dispatch_command("name", $1)
-      when "/leave", "/l"
-        dispatch_command("leave")
-      when pattern_factory.call("message"), pattern_factory.call("m"), "/message", "/m"
-        dispatch_command("message", $1)
-      when "/quit", "/q"
-        dispatch_command("quit")
-      when "/clear", '/c'
-        dispatch_command("clear")
-      when %r{^/([a-zA-Z]+)\s{1}([^s]+.*?)}, %r{^/([a-zA-Z]+)$}
-        _puts "[Mchat] `/#{$1}`command not found.".style.warn
-      else
-        dispatch_command("default", words)
+    class_eval(%Q(
+      def parser(raw)
+        words = raw.strip
+        CommandConditions.each do |command|
+          command_condition = command[:command_condition]
+          command_condition.each do |cc|
+            if cc.match(words)
+              dispatch_command(command[:command_run], words)
+            end
+          end
+        end
       end
-    end
+    ))
+
 
     def user_hint_prefix
       printf "#{_current_channel ? '['+_current_channel+']' : '' }#{_current_nickname ? '@'+_current_nickname : '' }#{@wait_prefix}"
@@ -194,8 +203,26 @@ module Mchat
         tick
       end
     end
+
+    def _mchat_speak(content)
+      _puts2 Message.new({
+                          "user_name" => "Mchat",
+                          "timestamp" => Time.now.to_i,
+                          "content" => content
+                        }).display
+    end
+
+    def _mchat_action(content)
+      _puts2 Message.new({
+                          "user_name" => "Mchat [action]",
+                          "timestamp" => Time.now.to_i,
+                          "content" => content
+                        }).display
+    end
   end
 
 end
+
+
 
 Mchat::Repl.new.run
