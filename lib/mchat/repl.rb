@@ -61,7 +61,8 @@ module Mchat
       :quit,
       :clear,
       :help,
-      :guide
+      :guide,
+      :default
     ]
 
     install_commands.each do |c|
