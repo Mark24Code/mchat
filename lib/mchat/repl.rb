@@ -40,7 +40,6 @@ module Mchat
     end
 
     def self.command(cmd, *args, &block)
-      p cmd
       cmd = Mchat::Command.load_command(cmd) if cmd.is_a?(Symbol)
       raise MchatError, "Invalid cmd type: #{cmd.class.inspect}" unless cmd.is_a?(Module)
 
@@ -151,7 +150,6 @@ module Mchat
     end
 
     def dispatch(name, content = nil)
-      puts "[dispatch] #{name}"
       if content
         __send__(name, content)
       else
