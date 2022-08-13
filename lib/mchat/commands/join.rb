@@ -22,7 +22,7 @@ explain: join the channel
 
           if all_channels.any? channel_name
             mchat_action("join channel: #{channel_name}")
-            @current_channel = channel_name
+            _current_channel = channel_name
             fetch_channel_task
           else
             puts "Channel: #{channel_name} not found!".style.warn

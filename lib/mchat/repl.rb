@@ -41,6 +41,14 @@ module Mchat
       @current_nickname = nil
     end
 
+    def _current_channel
+      @current_channel
+    end
+
+    def _current_nickname
+      @current_nickname
+    end
+
     include Mchat::Welcome
     include Mchat::Commands::Guide
     include Mchat::Commands::Channel
@@ -78,8 +86,8 @@ module Mchat
     def fetch_channel_task
       Thread.new do
         last_news_time = 0
-        while @current_channel && @channel_message_poll_running
-          resp = ::Mchat::Api.fetch_channel_message(@current_channel)
+        while _current_channel && @channel_message_poll_running
+          resp = ::Mchat::Api.fetch_channel_message(_current_channel)
           data = resp.fetch("data")
           messages = data["messages"] || []
 
@@ -141,7 +149,7 @@ module Mchat
     end
 
     def user_hint_prefix
-      printf "#{@current_channel ? '['+@current_channel+']' : '' }#{@current_nickname ? '@'+@current_nickname : '' }#{@wait_prefix}"
+      printf "#{_current_channel ? '['+_current_channel+']' : '' }#{_current_nickname ? '@'+_current_nickname : '' }#{@wait_prefix}"
     end
 
     def tick

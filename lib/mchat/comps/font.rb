@@ -10,6 +10,14 @@ module Mchat
       @text.bold.cyan
     end
 
+    def jade
+      @text.bold.green
+    end
+
+    def sea
+      @text.bold.sea
+    end
+
     def warn
       @text.bold.yellow
     end

@@ -107,7 +107,7 @@ you can send message without /m  command, that's default mode.
       end
 
       def command_default(words)
-        if @current_channel && @current_nickname
+        if _current_channel && _current_nickname
           command_message(words)
         else
           puts "Oops.. This is `Default Mode`:".style.warn
