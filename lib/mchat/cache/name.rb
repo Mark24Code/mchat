@@ -10,7 +10,7 @@ explain: give your name in channel for chatting.
 )
       end
 
-      def _command_runname(user_name = nil)
+      def def name_command_run(user_name = nil)
         if _current_nickname
           _puts "You have `name` and active in this channel now.".style.warn
           _puts "Please leave this channel then change your name.".style.warn

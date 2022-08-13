@@ -41,7 +41,7 @@ type `/h 1` work fine too.
 )
       end
 
-      def _command_runhelp(subject = nil)
+      def def help_command_run(subject = nil)
 
         if subject == nil
           dispatch_help "help"
@@ -72,51 +72,9 @@ type `/h 1` work fine too.
       end
     end
 
-    # Command Guide
-    module Guide
-      def guide_help_doc
-        _puts %Q(
-             #{"Help: Guide".style.bold}
-Mchat is a tiny chat software.
-
-Howto:
-
-.....
-
-
-)
-      end
-
-      def _command_runguide
-        _puts "TODO run command guide"
-      end
-    end
 
     # Command Default
-    module Default
 
-      def default_help_doc
-        _puts %Q(
-             #{"Help: Default Mode".style.bold}
-if you have joined `channel`
-and you have a `name` in channel
-
-you can send message without /m  command, that's default mode.
-
-)
-      end
-
-      def _command_rundefault(words)
-        if _current_channel && _current_nickname
-          command_message(words)
-        else
-          _puts "Oops.. This is `Default Mode`:".style.warn
-          _puts "if you join channel and have name, it will send message.".style.warn
-          _puts "Do nothing. maybe you need join channel or use commands. try /h for more.".style.warn
-        end
-      end
-
-    end
 
   end
 end

@@ -12,7 +12,7 @@ explain: login the channel
 )
       end
 
-      def _command_runchannel(channel_name = nil)
+      def def channel_command_run(channel_name = nil)
         if !channel_name
           # 返回全部节点
           resp = ::Mchat::Api.get_channels

@@ -5,7 +5,7 @@ module Mchat
       def self.configure(repl)
         CommandConditions.push({
           help_condition: ['clear','c'],
-          help_doc: :clear_doc_quit,
+          help_doc: :clear_help_doc,
           command_condition: ['/clear', '/c'],
           command_run: :clear_command_run
         })

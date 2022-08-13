@@ -11,7 +11,7 @@ explain: join the channel
 )
       end
 
-      def _command_runjoin(channel_name = nil)
+      def def join_command_run(channel_name = nil)
         if !channel_name
           _puts "channel_name missing !\n type`/join <channel_name>`".style.warn
         else

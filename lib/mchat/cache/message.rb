@@ -11,7 +11,7 @@ explain: send your message
 )
       end
 
-      def _command_runmessage(words)
+      def def message_command_run(words)
         if !_current_channel
           _puts "You are not in channel, so you cannot message.".style.warn
           _puts "type `/n[ame] <your name>` before chat".style.warn

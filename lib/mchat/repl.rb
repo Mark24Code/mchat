@@ -59,6 +59,7 @@ module Mchat
 
     Command.command :quit
     Command.command :clear
+    Command.command :help
 
     # Instance ########################3
 
@@ -70,9 +71,9 @@ module Mchat
       @output = "./chat.log"
       @printer = Printer.new(@output)
       @channel_message_poll_time = 1 # seconds
-      @channel_message_poll_running = true # global lock
+      @channel_message_poll_running = false # global lock
 
-      @clear_repl_everytime = true # global lock
+      @clear_repl_everytime = false # global lock
 
       @current_channel = nil
       @current_nickname = nil
@@ -135,18 +136,14 @@ module Mchat
       end
     end
 
-    def dispatch_command(name, content = nil)
+    def dispatch(name, content = nil)
+      puts "[dispatch] #{name}"
       if content
         __send__(name, content)
       else
         __send__(name)
       end
     end
-
-    def dispatch_help(name)
-      __send__("command_#{name}_help")
-    end
-
 
     class_eval(%Q(
       def parser(raw)
@@ -155,7 +152,7 @@ module Mchat
           command_condition = command[:command_condition]
           command_condition.each do |cc|
             if cc.match(words)
-              dispatch_command(command[:command_run], words)
+              dispatch(command[:command_run], words)
             end
           end
         end

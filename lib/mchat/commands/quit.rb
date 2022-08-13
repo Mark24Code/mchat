@@ -4,7 +4,7 @@ module Mchat
       def self.configure(repl)
         CommandConditions.push({
           help_condition: ['quit','q'],
-          help_doc: :help_doc_quit,
+          help_doc: :quit_help_doc,
           command_condition: ['/quit', '/q'],
           command_run: :quit_command_run
         })
