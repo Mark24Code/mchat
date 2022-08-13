@@ -64,7 +64,7 @@ module VNode
     end
 
     def render
-      puts @root.render
+      _puts @root.render
     end
   end
 enda

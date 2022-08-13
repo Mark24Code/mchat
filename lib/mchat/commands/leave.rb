@@ -3,7 +3,7 @@ module Mchat
     # Command Join
     module Leave
       def command_leave_help
-        puts %Q(
+        _puts %Q(
              #{"Help: Leave".style.bold}
 command: /leave
 explain: leave channel and delete your name.
@@ -15,13 +15,13 @@ explain: leave channel and delete your name.
           resp = ::Mchat::Api.leave_channel( _current_channel , _current_nickname)
           code = resp.fetch("code")
           if code == StatusCode::Success
-            puts "#{_current_nickname} leave success.".style.primary
+            _puts "#{_current_nickname} leave success.".style.primary
             _current_nickname = nil
           else
-            puts "leave request connect fail. try again.".style.warn
+            _puts "leave request connect fail. try again.".style.warn
           end
         else
-          puts "You are not have name in channel. Not need leave.".style.warn
+          _puts "You are not have name in channel. Not need leave.".style.warn
         end
       end
 

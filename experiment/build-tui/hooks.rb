@@ -2,9 +2,9 @@
 
 module Hook
   State = Struct.new(:state_id, :value)
-  
+
   class StoreHook
-      
+
     def gen_id
       Time.now.to_i
     end
@@ -20,7 +20,7 @@ module Hook
       state = State.new(state_id, value)
       @store[state_id] = state
 
-      state_setter = lambda { |value|  
+      state_setter = lambda { |value|
         # 保持引用赋值，不可切断
         @store[state.state_id].value = value
         @update.push(state.state_id)
@@ -44,7 +44,7 @@ end
 # store =  StoreHook.new
 # name, set_name = store.use_state("mark24")
 
-# puts name.value
+# _puts name.value
 # set_name.call("linda")
-# puts name.value
+# _puts name.value
 # ```

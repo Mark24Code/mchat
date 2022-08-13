@@ -2,7 +2,7 @@ require_relative "./version"
 
 require_relative "./comps/font"
 # monkey patch!
-# give String styles 
+# give String styles
 class String
   include Mchat::Style
 end
@@ -49,6 +49,17 @@ module Mchat
       @current_nickname
     end
 
+    def _screen_puts(content)
+      @printer.display(content)
+    end
+
+    def _cli_puts(content)
+      puts content
+    end
+
+    alias _puts  _cli_puts
+    alias __puts2 _screen_puts
+
     include Mchat::Welcome
     include Mchat::Commands::Guide
     include Mchat::Commands::Channel
@@ -65,23 +76,23 @@ module Mchat
       @printer.display(content)
     end
 
-    def mchat_speak(content)
-      puts2 Message.new({
+    def _mchat_speak(content)
+      _puts2 Message.new({
                           "user_name" => "Mchat",
                           "timestamp" => Time.now.to_i,
                           "content" => content
                         }).display
     end
 
-    def mchat_action(content)
-      puts2 Message.new({
+    def _mchat_action(content)
+      _puts2 Message.new({
                           "user_name" => "Mchat [action]",
                           "timestamp" => Time.now.to_i,
                           "content" => content
                         }).display
     end
 
-    alias puts2 puts_2_printer
+    alias _puts2 puts_2_printer
 
     def fetch_channel_task
       Thread.new do
@@ -99,7 +110,7 @@ module Mchat
             news.each do |m|
               content << Message.new(m).display
             end
-            puts2 content
+            _puts2 content
             last_news_time = news.last["timestamp"]
           end
           sleep @channel_message_poll_time
@@ -142,7 +153,7 @@ module Mchat
       when "/clear", '/c'
         dispatch_command("clear")
       when %r{^/([a-zA-Z]+)\s{1}([^s]+.*?)}, %r{^/([a-zA-Z]+)$}
-        puts "[Mchat] `/#{$1}`command not found.".style.warn
+        _puts "[Mchat] `/#{$1}`command not found.".style.warn
       else
         dispatch_command("default", words)
       end
@@ -156,9 +167,9 @@ module Mchat
       #   begin
       user_hint_prefix
       user_type_in = gets
-      # puts "===[debug+]==="
+      # _puts "===[debug+]==="
       # p user_type_in
-      # puts "===[debug-]==="
+      # _puts "===[debug-]==="
       @clear_repl_everytime && system('clear')
       parser(user_type_in)
       sleep 0.1
@@ -168,19 +179,19 @@ module Mchat
     end
 
     def init_help_message
-      puts "Mchat #{Mchat::VERSION}"
-      puts "/h[elp] for help".style.primary
-      puts ""
+      _puts "Mchat #{Mchat::VERSION}"
+      _puts "/h[elp] for help".style.primary
+      _puts ""
     end
 
     def before_loop_setup
       # cli
-      puts welcome(@display_welcome)
+      _puts welcome(@display_welcome)
 
       init_help_message
       # chat printer
-      puts2 welcome(@display_welcome)
-      puts2 conn_server
+      _puts2 welcome(@display_welcome)
+      _puts2 conn_server
     end
 
     def run

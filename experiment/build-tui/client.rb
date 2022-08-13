@@ -38,7 +38,7 @@ module Mchat
   #   def initialize
   #     @welcome_display = true
   #     @components = []
-      
+
   #     _mount_component
 
   #     init_client
@@ -51,7 +51,7 @@ module Mchat
   #   def init_client
   #     @components.each do |c|
   #       c.render.map do |t|
-  #         puts t
+  #         _puts t
   #       end
   #     end
   #   end
@@ -81,7 +81,7 @@ module Mchat
   #       sleep 0.16
   #     end
   #   end
-    
+
   #   def run
   #     welcome(@welcome_display)
   #     main_loop

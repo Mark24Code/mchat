@@ -97,7 +97,7 @@ module VNode
     end
 
     def render
-      puts @root.call
+      _puts @root.call
     end
   end
 end

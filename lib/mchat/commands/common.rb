@@ -3,7 +3,7 @@ module Mchat
     # Command Quit
     module Quit
       def command_quit_help
-        puts %Q(
+        _puts %Q(
              #{"Help: Quit".style.bold}
 command: /q
 explain: quit the mchat.
@@ -12,7 +12,7 @@ explain: quit the mchat.
       end
 
       def command_quit
-        puts "Bye :D"
+        _puts "Bye :D"
         # TODO exit life cycle
         exit 0
       end
@@ -21,7 +21,7 @@ explain: quit the mchat.
     # Command Help
     module Help
       def command_help_help
-        puts %Q(
+        _puts %Q(
              #{"Help: Index".style.bold}
 Choose subject to help:
 1. guide      : howto guide
@@ -75,7 +75,7 @@ type `/h 1` work fine too.
     # Command Guide
     module Guide
       def command_guide_help
-        puts %Q(
+        _puts %Q(
              #{"Help: Guide".style.bold}
 Mchat is a tiny chat software.
 
@@ -88,7 +88,7 @@ Howto:
       end
 
       def command_guide
-        puts "TODO run command guide"
+        _puts "TODO run command guide"
       end
     end
 
@@ -96,9 +96,9 @@ Howto:
     module Default
 
       def command_default_help
-        puts %Q(
+        _puts %Q(
              #{"Help: Default Mode".style.bold}
-if you have joined `channel` 
+if you have joined `channel`
 and you have a `name` in channel
 
 you can send message without /m  command, that's default mode.
@@ -110,9 +110,9 @@ you can send message without /m  command, that's default mode.
         if _current_channel && _current_nickname
           command_message(words)
         else
-          puts "Oops.. This is `Default Mode`:".style.warn
-          puts "if you join channel and have name, it will send message.".style.warn
-          puts "Do nothing. maybe you need join channel or use commands. try /h for more.".style.warn
+          _puts "Oops.. This is `Default Mode`:".style.warn
+          _puts "if you join channel and have name, it will send message.".style.warn
+          _puts "Do nothing. maybe you need join channel or use commands. try /h for more.".style.warn
         end
       end
 

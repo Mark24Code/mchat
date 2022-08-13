@@ -4,7 +4,7 @@ module Mchat
     # Command Channel
     module Channel
       def command_channel_help
-        puts %Q(
+        _puts %Q(
              #{"Help: Channel".style.bold}
 command: /channel <channel_name>
 explain: login the channel
@@ -31,11 +31,11 @@ explain: login the channel
 
           content << ""
           content << "type `/join <channel_name>` to join the channel.\n"
-          puts content
+          _puts content
 
           # printer
-          mchat_action("fetch all channels")
-          # puts2 content
+          _mchat_action("fetch all channels")
+          # _puts2 content
         else
           # 指定节点
           resp = ::Mchat::Api.get_channel(channel_name)
@@ -52,11 +52,11 @@ explain: login the channel
           end
           content << ""
           content << "total: #{online_users.length}.\n"
-          puts content
+          _puts content
 
           # printer
-          mchat_action("channel #{channel_name} info:")
-          # puts2 content
+          _mchat_action("channel #{channel_name} info:")
+          # _puts2 content
         end
       end
     end

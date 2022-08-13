@@ -26,7 +26,7 @@ class EventLoop
   end
 
   def after_loop
-    puts "[after_loop] eventloop is quit :D"
+    _puts "[after_loop] eventloop is quit :D"
   end
 
   def macro_queue_works
