@@ -20,9 +20,15 @@ explain: login the channel
 
           # cli
           content = "Mchat Channels:\n".style.primary
-          all_channels.each do |c|
-            content << "* #{c}\n"
+          if all_channels.length > 0
+            all_channels.each do |c|
+              content << "* #{c}\n"
+            end
+          else
+            # TODO create channel
+            content << "Opps."
           end
+
           content << ""
           content << "type `/join <channel_name>` to join the channel.\n"
           puts content

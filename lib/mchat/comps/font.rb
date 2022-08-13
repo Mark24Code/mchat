@@ -15,7 +15,7 @@ module Mchat
     end
 
     def sea
-      @text.bold.sea
+      @text.bold.blue
     end
 
     def warn
