@@ -1,0 +1,6 @@
+split -v
+
+screen -t mchat 'htop'
+focus
+screen -t mchat_cli 'rb2048'
+
