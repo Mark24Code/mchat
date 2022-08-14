@@ -93,6 +93,7 @@ module Mchat
       :leave,
       :clear,
       :quit,
+      :bossmode,
       :default
     ]
 

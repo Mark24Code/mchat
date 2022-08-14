@@ -1,0 +1,29 @@
+npm WARN ERESOLVE overriding peer dependency
+npm WARN While resolving: @babel/plugin-bugfix-v8-spread-parameters-in-optional-chaining@7.16.7
+npm WARN Found: @babel/core@7.12.3
+npm WARN node_modules/@babel/core
+npm WARN   @babel/core@"7.12.3" from the root project
+npm WARN   102 more (@babel/helper-compilation-targets, ...)
+npm WARN
+npm WARN Could not resolve dependency:
+npm WARN peer @babel/core@"^7.13.0" from @babel/plugin-bugfix-v8-spread-parameters-in-optional-chaining@7.16.7
+npm WARN node_modules/@babel/plugin-bugfix-v8-spread-parameters-in-optional-chaining
+npm WARN   @babel/plugin-bugfix-v8-spread-parameters-in-optional-chaining@"^7.16.7" from @babel/preset-env@7.16.11
+npm WARN   node_modules/@babel/preset-env
+npm WARN
+npm WARN Conflicting peer dependency: @babel/core@7.18.10
+npm WARN node_modules/@babel/core
+npm WARN   peer @babel/core@"^7.13.0" from @babel/plugin-bugfix-v8-spread-parameters-in-optional-chaining@7.16.7
+npm WARN   node_modules/@babel/plugin-bugfix-v8-spread-parameters-in-optional-chaining
+npm WARN     @babel/plugin-bugfix-v8-spread-parameters-in-optional-chaining@"^7.16.7" from @babel/preset-env@7.16.11
+npm WARN     node_modules/@babel/preset-env
+npm WARN deprecated source-map-resolve@0.6.0: See https://github.com/lydell/source-map-resolve#deprecated
+npm WARN deprecated source-map-resolve@0.5.3: See https://github.com/lydell/source-map-resolve#deprecated
+npm WARN deprecated source-map-resolve@0.5.3: See https://github.com/lydell/source-map-resolve#deprecated
+npm WARN deprecated fsevents@1.2.13: fsevents 1 will break on node v14+ and could be using insecure binaries. Upgrade to fsevents 2.
+npm WARN deprecated fsevents@1.2.13: fsevents 1 will break on node v14+ and could be using insecure binaries. Upgrade to fsevents 2.
+npm WARN deprecated chokidar@2.1.8: Chokidar 2 does not receive security updates since 2019. Upgrade to chokidar 3 with 15x fewer dependencies
+npm WARN deprecated chokidar@2.1.8: Chokidar 2 does not receive security updates since 2019. Upgrade to chokidar 3 with 15x fewer dependencies
+npm WARN deprecated rollup-plugin-babel@4.4.0: This package has been deprecated and is no longer maintained. Please use @rollup/plugin-babel.
+npm WARN deprecated querystring@0.2.1: The querystring API is considered Legacy. new code should use the URLSearchParams API instead.
+npm WARN deprecated querystring@0.2.0: The querystring API is considered Legacy. new code should use the URLSearchParams API instead.

@@ -34,6 +34,11 @@ module Mchat
       @store
     end
 
+    def messages_history(count)
+      last_messages = @store[@field_history_name].last(count)
+      return last_messages
+    end
+
     def message_writer(content)
       get_store
       @store.transaction do
