@@ -7,7 +7,7 @@ module Mchat
       File.exist? CONFIG_PATH
     end
     def create_user_config
-      File.open(CONFIG_PATH, 'w') do |f|
+      File.new(CONFIG_PATH, 'w') do |f|
 init_config = %Q(
 # Mchat user config
 # use yaml syntax

@@ -16,7 +16,7 @@ class MchatApp
   end
 
   def create_screenrc
-    File.open(@screenrc, 'w') do |f|
+    File.new(@screenrc, 'w') do |f|
   init_config = %Q(
   split -v
 
