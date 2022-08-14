@@ -1,8 +1,5 @@
+#!/usr/bin/env ruby
 require 'pathname'
-
-screenrc =
-
-screen -c './screenrc'
 
 class MchatApp
   def initialize
