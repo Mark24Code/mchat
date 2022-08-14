@@ -33,6 +33,7 @@ explain: give your name in channel for chatting.
             if code == StatusCode::Success
               _puts "#{user_name} is avalibale.".style.primary
               _set_current_nickname  user_name
+              channel_heartbeat_task
             else
               _set_current_nickname  nil
               _puts "#{user_name} has been used in channel: #{_current_channel}\ntry rename.".style.warn

@@ -111,6 +111,9 @@ module Mchat
       @channel_message_poll_time = 1 # seconds
       @channel_message_poll_running = true # global lock
 
+      @channel_heartbeat_running = true # global lock
+      @channel_heartbeat_time = 2 # global lock
+
       @clear_repl_everytime = false # global lock
 
       @current_channel = nil
@@ -138,6 +141,15 @@ module Mchat
             last_news_time = news.last["timestamp"]
           end
           sleep @channel_message_poll_time
+        end
+      end
+    end
+
+    def channel_heartbeat_task
+      Thread.new do
+        while _current_channel && _current_nickname && @channel_heartbeat_running
+          resp = ::Mchat::Api.ping_channel(_current_channel, _current_nickname)
+          sleep @channel_heartbeat_time
         end
       end
     end
