@@ -48,7 +48,7 @@ module Mchat
 
     include Command
     include Mchat::Welcome
-    
+
     install_commands = [
       :help,
       :guide,
@@ -148,13 +148,15 @@ module Mchat
 
     def parser(raw)
       words = raw.strip
-      CommandConditions.each do |command|
-        command_condition = command[:command_condition]
-        command_condition.each do |cc|
-          if cc.match(words)
-            content = $1 ? $1 : nil
-            _dispatch(command[:command_run], content)
-            break
+      catch :halt do
+        CommandConditions.each do |command|
+          command_condition = command[:command_condition]
+          command_condition.each do |cc|
+            if cc.match(words)
+              content = $1 ? $1 : nil
+              _dispatch(command[:command_run], content)
+              throw :halt
+            end
           end
         end
       end

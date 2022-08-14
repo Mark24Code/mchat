@@ -35,13 +35,15 @@ type `/h guide` you will find guide guide.
             return help_help_doc
           end
           subject = subject && subject.strip
-          CommandConditions.each do |command|
-            help_condition = command[:help_condition]
-            help_condition.each do |hc|
-              if hc.match(subject)
-                catch_subject =  $1 ? $1 : nil
-                _dispatch(command[:help_doc], catch_subject)
-                break
+          catch :halt do
+            CommandConditions.each do |command|
+              help_condition = command[:help_condition]
+              help_condition.each do |hc|
+                if hc.match(subject)
+                  catch_subject =  $1 ? $1 : nil
+                  _dispatch(command[:help_doc], catch_subject)
+                  throw :halt
+                end
               end
             end
           end
