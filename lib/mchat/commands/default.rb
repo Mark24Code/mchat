@@ -23,8 +23,6 @@ you can send message without /m  command, that's default mode.
         end
 
         def default_command_run(words)
-          puts '>>>'
-          p words
           if _current_channel && _current_nickname && words
             return message_command_run(words)
           else
