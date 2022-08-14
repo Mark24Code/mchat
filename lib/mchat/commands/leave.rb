@@ -28,7 +28,7 @@ module Mchat
             code = resp.fetch("code")
             if code == StatusCode::Success
               _puts "#{_current_nickname} leave success.".style.primary
-              _current_nickname = nil
+              _set_current_nickname  nil
             else
               _puts "leave request connect fail. try again.".style.warn
             end

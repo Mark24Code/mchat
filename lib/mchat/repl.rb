@@ -84,7 +84,7 @@ module Mchat
       @output = "./chat.log"
       @printer = Printer.new(@output)
       @channel_message_poll_time = 1 # seconds
-      @channel_message_poll_running = false # global lock
+      @channel_message_poll_running = true # global lock
 
       @clear_repl_everytime = false # global lock
 
@@ -96,8 +96,16 @@ module Mchat
       @current_channel
     end
 
+    def _set_current_channel(channel_name)
+      @current_channel = channel_name
+    end
+
     def _current_nickname
       @current_nickname
+    end
+
+    def _set_current_nickname(nickname)
+      @current_nickname = nickname
     end
 
     def _chat_screen_print(content)

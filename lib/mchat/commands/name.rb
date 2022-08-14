@@ -32,9 +32,9 @@ explain: give your name in channel for chatting.
             code = resp.fetch("code")
             if code == StatusCode::Success
               _puts "#{user_name} is avalibale.".style.primary
-              _current_nickname = user_name
+              _set_current_nickname  user_name
             else
-              _current_nickname = nil
+              _set_current_nickname  nil
               _puts "#{user_name} has been used in channel: #{_current_channel}\ntry rename.".style.warn
             end
           end

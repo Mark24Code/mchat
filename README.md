@@ -42,3 +42,6 @@ The gem is available as open source under the terms of the [MIT License](https:/
 * [ ] 打包下载
 * [ ] README update HOWTO
 * [ ] 指令插件化
+* [ ] set 命令
+* [ ] 打字机效果(需要单独的渲染，不可以文件输出)
+* [ ] eval 增加连续组合命令

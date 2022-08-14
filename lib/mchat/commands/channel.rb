@@ -55,10 +55,10 @@ explain: login the channel
 
             # cli
             content = "#{"Mchat Channel:".style.primary} #{channel_name}\n"
-            content << "#{"online users:".style.green}\n"
+            content << "#{"online users:".style.jade}\n"
             online_users.each do |c|
               c = c.split(":").last # name
-              content << "* #{c.style.green}\n"
+              content << "* #{c.style.jade}\n"
             end
             content << ""
             content << "total: #{online_users.length}.\n"
