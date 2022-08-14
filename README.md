@@ -46,3 +46,6 @@ The gem is available as open source under the terms of the [MIT License](https:/
 * [ ] 打字机效果(需要单独的渲染，不可以文件输出)
 * [ ] eval 增加连续组合命令
 * [ ] 可以封装在docker里
+* [ ] 合理化初始化参数
+* [ ] config 三个 path 和dir 部分处理
+* [ ] cli 关闭通知timeline关闭
