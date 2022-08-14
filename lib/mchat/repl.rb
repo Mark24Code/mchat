@@ -8,83 +8,13 @@ class String
 end
 
 require_relative "./api"
+require_relative "./command"
 require_relative "./comps/printer"
 require_relative "./comps/welcome"
 require_relative "./comps/message"
 
 module Mchat
-  module Command
-    # Class ########################3
-    CommandComps = {}
-    CommandConditions = []
-
-    def self.mount_command(name, mod)
-      CommandComps[name] = mod
-    end
-
-    def self.load_command(name)
-      h = CommandComps
-      unless cmd = h[name]
-        require_relative "./commands/#{name}"
-        raise RodaError, "command #{name} did not mount itself correctly in Mchat::Command" unless cmd = h[name]
-      end
-      cmd
-    end
-
-    def self.command(cmd, *args, &block)
-      cmd = Mchat::Command.load_command(cmd) if cmd.is_a?(Symbol)
-      raise MchatError, "Invalid cmd type: #{cmd.class.inspect}" unless cmd.is_a?(Module)
-
-      include(cmd::InstanceMethods) if defined?(cmd::InstanceMethods)
-      extend(cmd::ClassMethods) if defined?(cmd::ClassMethods)
-      cmd.configure(self, *args, &block) if cmd.respond_to?(:configure)
-    end
-  end
-end
-
-module Mchat
-  # Core REPL class
-  class Repl
-
-    include Command
-    include Mchat::Welcome
-
-    install_commands = [
-      :help,
-      :guide,
-      :channel,
-      :join,
-      :name,
-      :message,
-      :leave,
-      :clear,
-      :quit,
-      :default
-    ]
-
-    install_commands.each do |c|
-      Command.command c
-    end
-
-
-    # Instance ########################3
-
-    def initialize
-      # TODO use config
-      # read config
-      @wait_prefix = ">>"
-      @display_welcome = true
-      @output = "./chat.log"
-      @printer = Printer.new(@output)
-      @channel_message_poll_time = 1 # seconds
-      @channel_message_poll_running = true # global lock
-
-      @clear_repl_everytime = false # global lock
-
-      @current_channel = nil
-      @current_nickname = nil
-    end
-
+  module ModApi
     def _current_channel
       @current_channel
     end
@@ -111,8 +41,81 @@ module Mchat
       puts content
     end
 
+    def _printer
+      @printer
+    end
+
+    def _dispatch(name, content = nil)
+      if content
+        __send__(name, content)
+      else
+        __send__(name)
+      end
+    end
+
     alias _puts  _cli_screen_print
     alias _puts2 _chat_screen_print
+
+    def _mchat_speak(content)
+      _puts2 Message.new({
+                          "user_name" => "Mchat",
+                          "timestamp" => Time.now.to_i,
+                          "content" => content
+                        }).display
+    end
+
+    def _mchat_action(content)
+      _puts2 Message.new({
+                          "user_name" => "Mchat [action]",
+                          "timestamp" => Time.now.to_i,
+                          "content" => content
+                        }).display
+    end
+  end
+end
+module Mchat
+  # Core REPL class
+  class Repl
+
+    include Command
+    include Mchat::Welcome
+
+    install_commands = [
+      :help,
+      :guide,
+      :channel,
+      :join,
+      :name,
+      :message,
+      :leave,
+      :clear,
+      :quit,
+      :default
+    ]
+
+    install_commands.each do |command|
+      Command.install command
+    end
+
+
+    # Instance ########################3
+
+    def initialize
+      # TODO use config
+      # read config
+      @wait_prefix = ">>"
+      @display_welcome = true
+      @output = "./chat.log"
+      @printer = Printer.new(@output)
+      @channel_message_poll_time = 1 # seconds
+      @channel_message_poll_running = true # global lock
+
+      @clear_repl_everytime = false # global lock
+
+      @current_channel = nil
+      @current_nickname = nil
+    end
+
 
     def fetch_channel_task
       Thread.new do
@@ -138,14 +141,6 @@ module Mchat
       end
     end
 
-    def _dispatch(name, content = nil)
-      if content
-        __send__(name, content)
-      else
-        __send__(name)
-      end
-    end
-
     def parser(raw)
       words = raw.strip
       catch :halt do
@@ -166,11 +161,9 @@ module Mchat
       printf "#{_current_channel ? '['+_current_channel+']' : '' }#{_current_nickname ? '@'+_current_nickname : '' }#{@wait_prefix}"
     end
 
-    def _printer
-      @printer
-    end
+    include Mchat::ModApi
 
-    def tick
+    def tick_work
       #   begin
       user_hint_prefix
       user_type_in = gets
@@ -204,27 +197,10 @@ module Mchat
     def run
       before_loop_setup
       loop do
-        tick
+        tick_work
       end
     end
-
-    def _mchat_speak(content)
-      _puts2 Message.new({
-                          "user_name" => "Mchat",
-                          "timestamp" => Time.now.to_i,
-                          "content" => content
-                        }).display
-    end
-
-    def _mchat_action(content)
-      _puts2 Message.new({
-                          "user_name" => "Mchat [action]",
-                          "timestamp" => Time.now.to_i,
-                          "content" => content
-                        }).display
-    end
   end
-
 end
 
 
