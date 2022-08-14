@@ -22,14 +22,13 @@ clear_repl_everytime: true
     end
 
     def read_user_config
-      if user_config_exist?
-        require 'yaml'
-        opt = YAML.load(File.open(CONFIG_PATH))
-        return opt
-      else
+      if !user_config_exist?
         create_user_config
-        read_user_config
       end
+
+      require 'yaml'
+      opt = YAML.load(File.open(CONFIG_PATH))
+      return opt
     end
   end
 end
