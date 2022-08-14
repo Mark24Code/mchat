@@ -1,4 +1,4 @@
 #!/usr/bin/env ruby
-require_relative "../lib/mchat"
+require_relative "../lib/mchat/timeline"
 
 Mchat::Timeline.new.run

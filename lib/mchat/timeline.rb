@@ -1,3 +1,4 @@
+require 'pathname'
 require 'rainbow'
 require_relative './store'
 
@@ -59,7 +60,7 @@ module Mchat
     end
 
     def boss_will_see_fake_logs
-      fake_logs = File.open('./fake_log.txt').readlines
+      fake_logs = File.open(Pathname.new(File.join(__dir__, './fake_log.txt'))).readlines
       thx = Thread.new {
         while @boss_mode
           fake_logs.each do |line|

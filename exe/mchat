@@ -3,6 +3,7 @@ require 'pathname'
 
 class MchatApp
   def initialize
+    @screenrc_dir = Pathname.new(Dir.home).join('.mchat')
     @screenrc = Pathname.new(Dir.home).join('.mchat').join('screenrc')
   end
 
@@ -16,6 +17,8 @@ class MchatApp
   end
 
   def create_screenrc
+    require 'fileutils'
+    FileUtils.mkdir_p(@screenrc_dir) unless File.exist?(@screenrc_dir)
     File.open(@screenrc, 'w') do |f|
   init_config = %Q(
   split -v
