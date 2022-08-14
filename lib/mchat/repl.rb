@@ -11,14 +11,6 @@ require_relative "./api"
 require_relative "./comps/printer"
 require_relative "./comps/welcome"
 require_relative "./comps/message"
-# require_relative "./commands/common"
-# require_relative "./commands/channel"
-# require_relative "./commands/join"
-# require_relative "./commands/name"
-# require_relative "./commands/leave"
-# require_relative "./commands/message"
-# require_relative "./commands/clear"
-
 
 module Mchat
   module Command
@@ -55,7 +47,8 @@ module Mchat
   class Repl
 
     include Command
-
+    include Mchat::Welcome
+    
     install_commands = [
       :help,
       :guide,
@@ -120,18 +113,6 @@ module Mchat
 
     alias _puts  _cli_screen_print
     alias _puts2 _chat_screen_print
-
-    include Mchat::Welcome
-    # include Mchat::Commands::Guide
-    # include Mchat::Commands::Channel
-    # include Mchat::Commands::Join
-    # include Mchat::Commands::Name
-    # include Mchat::Commands::Leave
-    # include Mchat::Commands::Message
-    # include Mchat::Commands::Default
-    # include Mchat::Commands::Help
-    # include Mchat::Commands::Quit
-    # include Mchat::Commands::Clear
 
     def fetch_channel_task
       Thread.new do

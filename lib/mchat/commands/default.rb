@@ -1,6 +1,14 @@
 module Mchat
   module Command
     module Default
+      CommandConditions.push({
+        name: 'default',
+        description: "default model",
+        help_condition: ['default'],
+        help_doc: :default_help_doc,
+        command_condition: [/(.*)/],
+        command_run: :default_command_run
+      })
       module InstanceMethods
         def default_help_doc
           _puts %Q(
@@ -16,7 +24,7 @@ you can send message without /m  command, that's default mode.
 
         def default_command_run(words)
           if _current_channel && _current_nickname
-            command_message(words)
+            return message_command_run(words)
           else
             _puts "Oops.. This is `Default Mode`:".style.warn
             _puts "if you join channel and have name, it will send message.".style.warn
