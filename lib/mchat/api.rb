@@ -36,6 +36,7 @@ module Mchat
     # 53xx database data
     InvalidParams = 5301
     RecordHaveExist = 5302
+    RecordNotExist = 5303
   end
 
   class Request

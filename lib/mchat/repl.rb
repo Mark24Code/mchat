@@ -84,6 +84,7 @@ module Mchat
       :help,
       :guide,
       :channel,
+      :channel_new,
       :join,
       :name,
       :message,

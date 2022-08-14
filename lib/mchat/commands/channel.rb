@@ -49,24 +49,35 @@ explain: login the channel
           else
             # 指定节点
             resp = ::Mchat::Api.get_channel(channel_name)
-            data = resp.fetch("data")
+            code = resp.fetch("code")
 
-            online_users = data["online_users"]
+            if code == StatusCode::RecordNotExist
+              content = "#{"Mchat Channel:".style.primary} #{channel_name}\n"
+              content << "channel not exist. use follow create new channel.\n"
+              content << ">> /channel_new <channel name>"
+              _puts content
+              return
+            else
+              # 存在这个channel
+              data = resp.fetch("data")
 
-            # cli
-            content = "#{"Mchat Channel:".style.primary} #{channel_name}\n"
-            content << "#{"online users:".style.jade}\n"
-            online_users.each do |c|
-              c = c.split(":").last # name
-              content << "* #{c.style.jade}\n"
+              online_users = data["online_users"]
+
+              # cli
+              content = "#{"Mchat Channel:".style.primary} #{channel_name}\n"
+              content << "#{"online users:".style.jade}\n"
+              online_users.each do |c|
+                c = c.split(":").last # name
+                content << "* #{c.style.jade}\n"
+              end
+              content << ""
+              content << "total: #{online_users.length}.\n"
+              _puts content
+
+              # printer
+              _mchat_action("channel #{channel_name} info:")
+              # _puts2 content
             end
-            content << ""
-            content << "total: #{online_users.length}.\n"
-            _puts content
-
-            # printer
-            _mchat_action("channel #{channel_name} info:")
-            # _puts2 content
           end
         end
       end
