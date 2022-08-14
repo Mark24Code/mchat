@@ -1,25 +1,6 @@
 require "json"
 require "httparty"
 
-module StatusCode
-  
-  # 2000 success
-  Success = 2000
-
-  # 5000 server error
-  # 50xx server machine
-  ServerError = 5000
-  # 51xx logic error
-
-  
-  # 52xx database auth
-  UserHaveExist = 5201 #用户已存在
-  UserNotExist  = 5202
-  # 53xx database data
-  InvalidParams = 5301
-  RecordHaveExist = 5302
-
-end
 module SafeProtect
   refine String do
     def safe
@@ -61,7 +42,7 @@ module Mchat
     include HTTParty
     # TODO 读取用户文件配置
     base_uri 'localhost:4567'
-    
+
 
     def initialize
       @headers = {"Accept": "application/json"}
@@ -133,7 +114,7 @@ module Mchat
     def create_channel_message(channel_name, user_name, content)
       json_parse self.class.post(
         "/channels/#{channel_name}/messages",
-        body: { 
+        body: {
           user_name: user_name,
           content: content
         }.to_json,
