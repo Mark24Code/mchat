@@ -1,5 +1,53 @@
-#!/usr/bin/env ruby
+require 'pathname'
 
-require_relative "../lib/mchat"
+screenrc =
 
-::Mchat::Repl.new.run
+screen -c './screenrc'
+
+class MchatApp
+  def initialize
+    @screenrc = Pathname.new(Dir.home).join('.mchat').join('screenrc')
+  end
+
+  def get_screenrc
+    if !screenrc_exist?
+      create_screenrc
+    end
+  end
+  def screenrc_exist?
+    File.exist? @screenrc
+  end
+
+  def create_screenrc
+    File.open(@screenrc, 'w') do |f|
+  init_config = %Q(
+  split -v
+
+  screen -t timeline 'mchat_timeline'
+  focus
+  screen -t repl 'mchat_repl'
+  )
+    f << init_config
+    end
+  end
+
+  def run
+    get_screenrc
+
+    # 使用Screen
+
+    # 左边文件读取记录，实现读取的信息流
+    # 右边是命令行，实现输入的控制流
+    # 这样组合来完成应用的交互形态
+
+    # https://www.gnu.org/software/screen/manual/screen.html#Split
+
+    # screenrc 里面写的就是 文档里面的命令
+    # split 是默认上下  split -v 是左右
+    # focus 是永远关注在下一个（cycle来工作的） 对应按键  C-a Tab
+
+    # -c 读取配置
+    system("screen -c #{@screenrc.to_s}")
+  end
+end
+

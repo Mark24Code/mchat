@@ -4,7 +4,7 @@ require 'pstore'
 module Mchat
   class Store
     def initialize(opt={})
-      @store_path = opt[:store_path] || Pathname.new(Dir.home).join('mchatdb')
+      @store_path = opt[:store_path] || Pathname.new(Dir.home).join('.mchat').join('mchatdb')
       @store_sync_time = opt[:store_sync_time] || 1
       @store_async_flag = opt[:store_async_flag] || false
       @field_name = opt[:field_name]

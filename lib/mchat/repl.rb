@@ -14,7 +14,7 @@ require_relative "./comps/timeline_api"
 require_relative "./comps/welcome"
 require_relative "./comps/message"
 
-require_relative "./store/store"
+require_relative "./store"
 
 module Mchat
   module ModApi

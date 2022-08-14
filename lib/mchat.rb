@@ -9,3 +9,4 @@ module Mchat
 end
 
 require_relative "./mchat/repl"
+require_relative "./mchat/timeline"

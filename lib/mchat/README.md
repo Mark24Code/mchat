@@ -1,1 +1,0 @@
-tail -f ./chat.log

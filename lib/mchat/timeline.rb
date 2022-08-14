@@ -1,5 +1,5 @@
 require 'rainbow'
-require_relative './store/store'
+require_relative './store'
 
 module Mchat
   class TimelineCommand

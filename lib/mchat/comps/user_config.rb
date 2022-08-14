@@ -2,7 +2,7 @@ require 'pathname'
 
 module Mchat
   module UserConfig
-    CONFIG_PATH = Pathname.new(Dir.home).join('.mchatrc')
+    CONFIG_PATH = Pathname.new(Dir.home).join('.mchat').join('.mchatrc')
     def user_config_exist?
       File.exist? CONFIG_PATH
     end
