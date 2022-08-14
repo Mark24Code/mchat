@@ -9,6 +9,7 @@ end
 
 require_relative "./api"
 require_relative "./command"
+require_relative "./comps/user_config"
 require_relative "./comps/printer"
 require_relative "./comps/welcome"
 require_relative "./comps/message"
@@ -77,6 +78,7 @@ module Mchat
   # Core REPL class
   class Repl
 
+    include UserConfig
     include Command
     include Mchat::Welcome
 
@@ -102,10 +104,9 @@ module Mchat
     # Instance ########################3
 
     def initialize
-      # TODO use config
-      # read config
-      @wait_prefix = ">>"
-      @display_welcome = true
+      config = read_user_config
+      @wait_prefix = config.fetch("wait_prefix") || ">>"
+      @display_welcome = config.fetch("display_welcome") || true
       @output = "./chat.log"
       @printer = Printer.new(@output)
       @channel_message_poll_time = 1 # seconds
@@ -114,7 +115,7 @@ module Mchat
       @channel_heartbeat_running = true # global lock
       @channel_heartbeat_time = 2 # global lock
 
-      @clear_repl_everytime = false # global lock
+      @clear_repl_everytime = config.fetch("clear_repl_everytime") || false # global lock
 
       @current_channel = nil
       @current_nickname = nil
