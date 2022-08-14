@@ -48,3 +48,5 @@ class MchatApp
   end
 end
 
+
+MchatApp.new.run
