@@ -2,12 +2,15 @@ require 'pathname'
 
 module Mchat
   module UserConfig
+    CONFIG_DIR = Pathname.new(Dir.home).join('.mchat')
     CONFIG_PATH = Pathname.new(Dir.home).join('.mchat').join('.mchatrc')
     def user_config_exist?
       File.exist? CONFIG_PATH
     end
     def create_user_config
-      File.new(CONFIG_PATH, 'w') do |f|
+      require 'fileutils'
+      FileUtils.mkdir_p(CONFIG_DIR) unless File.exist?(CONFIG_DIR)
+      File.open(CONFIG_PATH, 'w') do |f|
 init_config = %Q(
 # Mchat user config
 # use yaml syntax

@@ -4,6 +4,8 @@ require 'pstore'
 module Mchat
   class Store
     def initialize(opt={})
+      # TODO use path to read dir
+      @store_dir = Pathname.new(Dir.home).join('.mchat')
       @store_path = opt[:store_path] || Pathname.new(Dir.home).join('.mchat').join('mchatdb')
       @store_sync_time = opt[:store_sync_time] || 1
       @store_async_flag = opt[:store_async_flag] || false
@@ -16,6 +18,8 @@ module Mchat
       File.exist? @store_path
     end
     def create_store
+      require 'fileutils'
+      FileUtils.mkdir_p(@store_dir) unless File.exist?(@store_dir)
       PStore.new(@store_path)
     end
 
