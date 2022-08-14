@@ -18,6 +18,7 @@ module Mchat
         end
 
         def quit_command_run(words=nil)
+          _dispatch :leave_command_run
           _puts "Bye :D"
           # TODO exit life cycle
           exit 0

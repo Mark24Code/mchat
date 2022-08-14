@@ -218,4 +218,8 @@ end
 
 
 
-Mchat::Repl.new.run
+repl = Mchat::Repl.new
+
+trap("INT") { repl.quit_command_run }
+
+repl.run

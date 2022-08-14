@@ -33,7 +33,7 @@ module Mchat
               _puts "leave request connect fail. try again.".style.warn
             end
           else
-            _puts "You are not have name in channel. Not need leave.".style.warn
+            _puts "You use leave".style.warn
           end
         end
       end
