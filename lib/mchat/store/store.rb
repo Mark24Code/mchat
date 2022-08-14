@@ -67,6 +67,8 @@ module Mchat
       if(!@store_async_flag)
         thx.join
       end
+
+      return thx
     end
   end
 end

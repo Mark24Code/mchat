@@ -10,9 +10,11 @@ end
 require_relative "./api"
 require_relative "./command"
 require_relative "./comps/user_config"
-require_relative "./comps/printer"
+require_relative "./comps/timeline_api"
 require_relative "./comps/welcome"
 require_relative "./comps/message"
+
+require_relative "./store/store"
 
 module Mchat
   module ModApi
@@ -34,16 +36,13 @@ module Mchat
 
     def _chat_screen_print(content)
       # TODO add log
-      @printer.display(content)
+      # @printer.display(content)
+      @store.message_writer(content)
     end
 
     def _cli_screen_print(content)
       # TODO add log
       puts content
-    end
-
-    def _printer
-      @printer
     end
 
     def _dispatch(name, content = nil)
@@ -80,7 +79,8 @@ module Mchat
 
     include UserConfig
     include Command
-    include Mchat::Welcome
+    include Welcome
+    include TimelineApi
 
     install_commands = [
       :help,
@@ -108,7 +108,6 @@ module Mchat
       @wait_prefix = config.fetch("wait_prefix") || ">>"
       @display_welcome = config.fetch("display_welcome") || true
       @output = "./chat.log"
-      @printer = Printer.new(@output)
       @channel_message_poll_time = 1 # seconds
       @channel_message_poll_running = true # global lock
 
@@ -119,6 +118,10 @@ module Mchat
 
       @current_channel = nil
       @current_nickname = nil
+
+      @store = Mchat::Store.new({
+        field_name: :messages
+      })
     end
 
 

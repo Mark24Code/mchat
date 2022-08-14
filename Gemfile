@@ -11,6 +11,8 @@ gem "minitest", "~> 5.0"
 
 # gem "rubocop", "~> 1.21"
 
+gem 'tempfile'
+
 gem "rainbow"
 
 gem "httparty"

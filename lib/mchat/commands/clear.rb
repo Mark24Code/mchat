@@ -24,7 +24,7 @@ explain: clear chat screen.
         end
 
         def clear_command_run(repl = nil)
-          _printer.clear
+          timeline_clear
         end
       end
     end
