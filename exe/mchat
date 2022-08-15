@@ -1,8 +1,15 @@
 #!/usr/bin/env ruby
 require 'pathname'
-
+require_relative "../lib/mchat/comps/font"
+class String
+  include Mchat::Style
+end
+require_relative "../lib/mchat/comps/user_config"
 class MchatApp
+  include Mchat::UserConfig
+
   def initialize
+    first_time_use
     @screenrc_dir = Pathname.new(Dir.home).join('.mchat')
     @screenrc = Pathname.new(Dir.home).join('.mchat').join('screenrc')
   end
