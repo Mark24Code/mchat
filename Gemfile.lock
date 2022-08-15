@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    mchat (1.0.0)
+    mchat (0.1.0)
 
 GEM
   remote: https://rubygems.org/
