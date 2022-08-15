@@ -39,6 +39,8 @@ clear_repl_everytime: true
       if !@server
         puts "Mchat about `Server` Tips".style.jade
         puts ""
+        puts "your server: `#{@server}`"
+        puts ""
         init_config = "~/.mchat".style.warn
         puts "Mchat has help your create config to #{init_config}"
         server_field = "<server> field".style.warn

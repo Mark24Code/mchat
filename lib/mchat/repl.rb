@@ -104,11 +104,11 @@ module Mchat
 
     # Instance ########################3
 
-    def initialize(opt = {})
+    def initialize(opts = {})
 
       @config = read_user_config
 
-      @server = opt.fetch(:server, nil) || @config.fetch("server", nil) || nil
+      @server = opts.fetch(:server, nil) || @config.fetch("server", nil) || nil
 
       check_server_before_all
 
