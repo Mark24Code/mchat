@@ -1,11 +1,14 @@
 # Mchat
 
-IRC like chat client.
+Mchat is IRC like chat client.
 
 ![preview](./assets/preview.png)
 
-## Installation
+This is Mchat client repo, server repo:
 
+* [mchat_server](https://github.com/Mark24Code/mchat_server)
+
+## Installation
 
 install it yourself as:
 
