@@ -1,5 +1,7 @@
 FROM ruby:3.1-buster
 
+ENV LANG=C.UTF-8
+
 RUN apt update -y
 RUN apt install screen -y
 RUN apt install vim -y
