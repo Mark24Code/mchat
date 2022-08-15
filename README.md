@@ -2,6 +2,8 @@
 
 IRC like chat client.
 
+![preview](./assets/preview.png)
+
 ## Installation
 
 
