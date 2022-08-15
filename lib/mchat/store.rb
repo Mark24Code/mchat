@@ -3,6 +3,8 @@ require 'pstore'
 
 module Mchat
   class Store
+
+    attr_accessor :store_messages_reader_run
     def initialize(opt={})
       # TODO use path to read dir
       @store_dir = Pathname.new(Dir.home).join('.mchat')
@@ -12,6 +14,7 @@ module Mchat
       @field_name = opt[:field_name]
       @field_history_name = "#{@field_name.to_s}_history".to_sym
 
+      @store_messages_reader_run = true
       @store = nil
     end
     def store_exist?
@@ -57,7 +60,7 @@ module Mchat
     def message_loop_reader
       get_store
       thx = Thread.new {
-        loop do
+        while @store_messages_reader_run do
           @store.transaction do
             messages = @store[@field_name]
             messages.each do |m|
@@ -78,6 +81,14 @@ module Mchat
       end
 
       return thx
+    end
+
+    def hook_quit
+      @store.transaction do
+        messages = @store[@field_name]
+        @store[@field_history_name] += messages
+        @store[@field_name] = []
+      end
     end
   end
 end

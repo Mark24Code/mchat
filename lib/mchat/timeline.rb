@@ -4,11 +4,12 @@ require_relative './store'
 
 module Mchat
   class TimelineCommand
-    attr_accessor :name, :data
+    attr_accessor :name, :data, :used
     def initialize(name, data = nil)
       # name for log
       @name = name
       @data = data
+      @used = false
     end
   end
 
@@ -47,6 +48,15 @@ module Mchat
       end
     end
 
+    def api_close_window
+      @reader.store_messages_reader_run = false
+    end
+
+    def hook_close
+      @reader.hook_quit
+      system('screen -X quit')
+    end
+
     def dispatch(m)
       cmd_name = m.name
       data = m.data || nil
@@ -83,8 +93,16 @@ module Mchat
           end
         end
       }
+      hook_close
     end
   end
 end
 
 
+if __FILE__ == $0
+  tl = Mchat::Timeline.new
+
+  trap("INT") { tl.hook_close }
+
+  tl.run
+end

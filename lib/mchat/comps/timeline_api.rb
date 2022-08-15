@@ -9,5 +9,9 @@ module Mchat
     def timeline_bossmode
       _chat_screen_print(TimelineCommand.new(:bossmode))
     end
+
+    def timeline_close_window
+      _chat_screen_print(TimelineCommand.new(:close_window))
+    end
   end
 end

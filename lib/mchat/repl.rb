@@ -222,9 +222,10 @@ module Mchat
 end
 
 
+if __FILE__ == $0
+  repl = Mchat::Repl.new
 
-repl = Mchat::Repl.new
+  trap("INT") { repl.quit_command_run }
 
-trap("INT") { repl.quit_command_run }
-
-repl.run
+  repl.run
+end
