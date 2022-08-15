@@ -30,7 +30,7 @@ mchat
 
 直接使用
 
-`docker run -it mark24code/mchat`
+`docker run -it mark24code/mchat env LANG=C.UTF-8 /bin/bash`
 
 
 
