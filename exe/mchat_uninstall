@@ -1,8 +1,29 @@
 #!/usr/bin/env ruby
+require 'optparse'
+require_relative '../lib/mchat/version.rb'
 
-puts "[mchat] clean config ..."
-system("rm -rf .mchat")
-puts "[mchat] uninstall mchat ..."
-system("gem uninstall mchat")
+options = {}
+OptionParser.new do |opts|
+  opts.banner = "Usage: mchat_uninstall [options]"
 
-puts "[mchat] all files have uninstalled. Bye :D"
+  opts.on("--version", "version") do
+    
+    puts "MchatUninstall v#{::Mchat::VERSION}"
+    puts ""
+    puts "author: mark24"
+    puts "mail: mark.zhangyoung@qq.com"
+    return
+  end
+end.parse!
+
+
+def goodbye_job
+  puts "[mchat] clean config ..."
+  system("rm -rf .mchat")
+  puts "[mchat] uninstall mchat ..."
+  system("gem uninstall mchat")
+
+  puts "[mchat] all files have uninstalled. Bye :D"
+end
+
+goodbye_job

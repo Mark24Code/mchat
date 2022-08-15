@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
+require 'optparse'
 require 'pathname'
+require_relative '../lib/mchat/version.rb'
 require_relative "../lib/mchat/comps/font"
 class String
   include Mchat::Style
@@ -58,5 +60,20 @@ class MchatApp
   end
 end
 
+
+
+# options = {}
+OptionParser.new do |opts|
+  opts.banner = "Usage: mchat [options]"
+
+  opts.on("--version", "version") do
+    
+    puts "Mchat v#{::Mchat::VERSION}"
+    puts ""
+    puts "author: mark24"
+    puts "mail: mark.zhangyoung@qq.com"
+    return
+  end
+end.parse!
 
 MchatApp.new.run

@@ -1,5 +1,24 @@
 #!/usr/bin/env ruby
+require 'optparse'
+require_relative '../lib/mchat/version.rb'
 require_relative "../lib/mchat"
+
+
+options = {}
+OptionParser.new do |opts|
+  opts.banner = "Usage: mchat_repl [options]"
+
+  opts.on("--version", "version") do
+    
+    puts "MchatRepl v#{::Mchat::VERSION}"
+    puts ""
+    puts "author: mark24"
+    puts "mail: mark.zhangyoung@qq.com"
+    return
+  end
+
+end.parse!
+
 
 repl = Mchat::Repl.new
 
