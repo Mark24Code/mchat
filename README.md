@@ -29,7 +29,36 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ----
 
-# TODO Features
+# Features
+
+### repl
+
+* [x] repl主流程
+* [x] 命令模块化
+* [x] help 命令
+* [x] channel 命令
+* [x] join 命令
+* [x] name 命令
+* [x] message 命令
+* [x] leave 命令
+* [x] quit 命令
+* [x] clear 命令
+* [x] default mode
+* [x] boss mode
+* [x] 存储 Pstore 实现取代文件
+### timeline
+
+* [x] timeline 独立
+* [x] 支持简单命令
+* [x] hook_quit
+
+### union
+
+* [x] 联合打开screen window
+* [x] 联合关闭
+
+
+### TODO features
 
 * [ ] 密码登录用户，超级管理员
 * [ ] 密码登录channel
