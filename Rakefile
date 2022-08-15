@@ -13,4 +13,9 @@ end
 
 # RuboCop::RakeTask.new
 
+Rake::TestTask.new(:preview) do |t|
+  system("gem build mchat.gemspec && gem install ./mchat-#{Mchat::VERSION}.gem")
+end
+
+
 task default: %i[test]
