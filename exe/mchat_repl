@@ -9,7 +9,7 @@ OptionParser.new do |opts|
   opts.banner = "Usage: mchat_repl [options]"
 
   opts.on("--version", "version") do
-    
+
     puts "MchatRepl v#{::Mchat::VERSION}"
     puts ""
     puts "author: mark24"
@@ -17,10 +17,14 @@ OptionParser.new do |opts|
     return
   end
 
+  opts.on("--server=SERVER", "server") do |server|
+    options[:server] = server
+  end
+
 end.parse!
 
 
-repl = Mchat::Repl.new
+repl = Mchat::Repl.new(options)
 
 trap("INT") { repl.quit_command_run }
 

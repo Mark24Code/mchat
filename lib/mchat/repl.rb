@@ -104,14 +104,16 @@ module Mchat
 
     # Instance ########################3
 
-    def initialize
-      first_time_use
+    def initialize(opt = {})
 
       @config = read_user_config
-      @server = @config.fetch("server") || 'localhost:4567'
+
+      @server = opt.fetch(:server, nil) || @config.fetch("server", nil) || nil
+
+      check_server_before_all
 
       @api = ::Mchat::Request.new(@server)
-  
+
       @wait_prefix = @config.fetch("wait_prefix") || ">>"
       @display_welcome = @config.fetch("display_welcome") || true
 
@@ -215,7 +217,7 @@ module Mchat
       startup_msg = resp.fetch("data")
       return Message.new(startup_msg).display
     end
-  
+
     def before_loop_setup
       # cli
       _puts welcome(@display_welcome)

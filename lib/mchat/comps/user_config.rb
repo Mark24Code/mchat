@@ -18,7 +18,7 @@ init_config = %Q(
 wait_prefix: ">>"
 display_welcome: true
 clear_repl_everytime: true
-server: "localhost:4567"
+# server: "localhost:4567"
 
 )
       f << init_config
@@ -35,20 +35,31 @@ server: "localhost:4567"
       return opt
     end
 
-    def first_time_use
-      if !user_config_exist?
-        read_user_config
-        puts "Mchat first run TIPS".style.jade
+    def check_server_before_all
+      if !@server
+        puts "Mchat about `Server` Tips".style.jade
         puts ""
-        puts "Mchat not found user config, maybe this is your first time run Mchat."
         init_config = "~/.mchat".style.warn
         puts "Mchat has help your create config to #{init_config}"
         server_field = "<server> field".style.warn
         puts "Before you run mchat, edit your config file, change #{server_field} to yours:"
         puts "vim #{CONFIG_PATH.to_s}".style.warn
-        puts "make sure your server works, before run Mchat. :D"
-
-        exit 0
+        puts "make sure your server works, before run Mchat."
+        puts ""
+        puts "If you have server address, you can also run like this:"
+        puts "mchat --server='http://<your host>'"
+        puts "e.g.  mchat --server='http://localhost:4567'"
+        puts "so you will not need to edit mchatrc." + " :)".style.warn
+        puts ""
+        puts "Confirm? (y/yes)"
+        while true
+          confirm = gets
+          confirm = confirm.strip
+          if confirm == 'y' || confirm == 'yes'
+            system('screen -X quit')
+          end
+          sleep 0.1
+        end
       end
     end
   end

@@ -10,8 +10,8 @@ require_relative "../lib/mchat/comps/user_config"
 class MchatApp
   include Mchat::UserConfig
 
-  def initialize
-    first_time_use
+  def initialize(opts={})
+    @server = opts.fetch(:server, nil)
     @screenrc_dir = Pathname.new(Dir.home).join('.mchat')
     @screenrc = Pathname.new(Dir.home).join('.mchat').join('screenrc')
   end
@@ -32,10 +32,14 @@ class MchatApp
   init_config = %Q(
   split -v
 
-  screen -t timeline 'mchat_timeline'
+  screen -t timeline mchat_timeline
   focus
-  screen -t repl 'mchat_repl'
   )
+    if @server
+      init_config << "screen -t repl  mchat_repl --server=#{@server}"
+    else
+      init_config << "screen -t repl mchat_repl"
+    end
     f << init_config
     end
   end
@@ -62,18 +66,23 @@ end
 
 
 
-# options = {}
+options = {}
 OptionParser.new do |opts|
   opts.banner = "Usage: mchat [options]"
 
   opts.on("--version", "version") do
-    
+
     puts "Mchat v#{::Mchat::VERSION}"
     puts ""
     puts "author: mark24"
     puts "mail: mark.zhangyoung@qq.com"
     return
   end
+
+  opts.on("--server=SERVER", "server") do |server|
+    options[:server] = server
+  end
+
 end.parse!
 
-MchatApp.new.run
+MchatApp.new(options).run
