@@ -24,10 +24,6 @@ mchat
 /h
 ```
 
-## License
-
-The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
-
 
 
 ----
@@ -82,3 +78,38 @@ The gem is available as open source under the terms of the [MIT License](https:/
 * [ ] config 三个 path 和dir 部分处理
 * [x] cli 关闭通知timeline关闭
 * [ ] 加密消息
+
+
+# mchat_experiment
+
+Private Repo
+
+[mchat_experiment](https://github.com/Mark24Code/mchat_experiment)
+
+## 实验脚本
+
+* module 的模块化写法
+* 进程间 PStore 通信
+  * 模块化
+  * 面向对象实例
+
+* Tempfile 的使用
+* MessageQueue 线程队列的使用
+* 使用 screen & screenrc 创造双屏应用
+
+#### TUI
+
+模拟一个前端基于命令的浏览器
+
+* eventloop 模拟
+* vnode 虚拟dom的模拟：jsx 构建cli界面
+* hooks 模拟
+* lambda_vnode 纯函数式的写法模拟jsx组件
+* repl 时间循环模拟
+* 基于Curses 封的TUI
+* 基于消息队列封装的client
+
+## License
+
+The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+
