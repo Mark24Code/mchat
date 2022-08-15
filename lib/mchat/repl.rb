@@ -7,9 +7,9 @@ class String
   include Mchat::Style
 end
 
+require_relative "./comps/user_config"
 require_relative "./api"
 require_relative "./command"
-require_relative "./comps/user_config"
 require_relative "./comps/timeline_api"
 require_relative "./comps/welcome"
 require_relative "./comps/message"
@@ -105,6 +105,8 @@ module Mchat
     # Instance ########################3
 
     def initialize
+      first_time_use
+
       @config = read_user_config
       @server = @config.fetch("server") || 'localhost:4567'
 
@@ -190,18 +192,16 @@ module Mchat
     include Mchat::ModApi
 
     def tick_work
-      #   begin
-      user_hint_prefix
-      user_type_in = gets
-      # _puts "===[debug+]==="
-      # p user_type_in
-      # _puts "===[debug-]==="
-      @clear_repl_everytime && system('clear')
-      parser(user_type_in)
-      sleep 0.1
-      # rescue => exception
-      #   p exception
-      # end
+      begin
+        user_hint_prefix
+        user_type_in = gets
+
+        @clear_repl_everytime && system('clear')
+        parser(user_type_in)
+        sleep 0.1
+      rescue => exception
+        p exception
+      end
     end
 
     def init_help_message
@@ -210,6 +210,12 @@ module Mchat
       _puts ""
     end
 
+    def conn_server
+      resp = _api.conn_server_startup
+      startup_msg = resp.fetch("data")
+      return Message.new(startup_msg).display
+    end
+  
     def before_loop_setup
       # cli
       _puts welcome(@display_welcome)
@@ -217,7 +223,7 @@ module Mchat
       init_help_message
       # chat printer
       _puts2 welcome(@display_welcome)
-      _puts2 conn_server
+      # _puts2 conn_server
     end
 
     def run

@@ -34,5 +34,22 @@ server: "localhost:4567"
       opt = YAML.load(File.open(CONFIG_PATH))
       return opt
     end
+
+    def first_time_use
+      if !user_config_exist?
+        read_user_config
+        puts "Mchat first run TIPS".style.jade
+        puts ""
+        puts "Mchat not found user config, maybe this is your first time run Mchat."
+        init_config = "~/.mchat".style.warn
+        puts "Mchat has help your create config to #{init_config}"
+        server_field = "<server> field".style.warn
+        puts "Before you run mchat, edit your config file, change #{server_field} to yours:"
+        puts "vim #{CONFIG_PATH.to_s}".style.warn
+        puts "make sure your server works, before run Mchat. :D"
+
+        exit 0
+      end
+    end
   end
 end

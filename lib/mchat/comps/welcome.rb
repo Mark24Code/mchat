@@ -6,12 +6,6 @@ module Mchat
       end
     end
 
-    def conn_server
-      resp = _api.conn_server_startup
-      startup_msg = resp.fetch("data")
-      return Message.new(startup_msg).display
-    end
-
     def display_ascii_art
       # https://rubygems.org/gems/artii
 content = <<-'EOF'
