@@ -55,6 +55,7 @@ module Mchat
     def hook_close
       @reader.hook_quit
       system('screen -X quit')
+      exit 0
     end
 
     def dispatch(m)
