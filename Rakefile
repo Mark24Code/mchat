@@ -13,9 +13,17 @@ end
 
 # RuboCop::RakeTask.new
 
-Rake::TestTask.new(:preview) do |t|
+desc 'build gem & local install it'
+task :preview do
   system("gem build mchat.gemspec && gem install ./mchat-#{Mchat::VERSION}.gem")
 end
 
+desc 'build docker images & push'
+task :docker_pd do
+  system("docker build -t mark24code/mchat:latest .")
+  system("docker push mark24code/mchat")
+  system("docker build -t mark24code/mchat:#{Mchat::VERSION} .")
+  system("docker push mark24code/mchat:#{Mchat::VERSION}")
+end
 
 task default: %i[test]
