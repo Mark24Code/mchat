@@ -26,6 +26,12 @@ mchat
 /h
 ```
 
+或者使用Docker
+
+直接使用
+
+`docker run -it mark24code/mchat`
+
 
 
 ----
