@@ -1,0 +1,8 @@
+#!/usr/bin/env ruby
+
+puts "[mchat] clean config ..."
+system("rm -rf .mchat")
+puts "[mchat] uninstall mchat ..."
+system("gem uninstall mchat")
+
+puts "[mchat] all files have uninstalled. Bye :D"
