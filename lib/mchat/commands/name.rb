@@ -28,7 +28,7 @@ explain: give your name in channel for chatting.
             _puts "You have `name` and active in this channel now.".style.warn
             _puts "Please leave this channel then change your name.".style.warn
           else
-            resp = ::Mchat::Api.join_channel( _current_channel , user_name)
+            resp = _api.join_channel( _current_channel , user_name)
             code = resp.fetch("code")
             if code == StatusCode::Success
               _puts "#{user_name} is avalibale.".style.primary

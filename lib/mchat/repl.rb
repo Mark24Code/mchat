@@ -105,17 +105,22 @@ module Mchat
     # Instance ########################3
 
     def initialize
-      config = read_user_config
-      @wait_prefix = config.fetch("wait_prefix") || ">>"
-      @display_welcome = config.fetch("display_welcome") || true
-      @output = "./chat.log"
+      @config = read_user_config
+      @server = @config.fetch("server") || 'localhost:4567'
+
+      @api = ::Mchat::Request.new(@server)
+  
+      @wait_prefix = @config.fetch("wait_prefix") || ">>"
+      @display_welcome = @config.fetch("display_welcome") || true
+
+
       @channel_message_poll_time = 1 # seconds
       @channel_message_poll_running = true # global lock
 
       @channel_heartbeat_running = true # global lock
       @channel_heartbeat_time = 2 # global lock
 
-      @clear_repl_everytime = config.fetch("clear_repl_everytime") || false # global lock
+      @clear_repl_everytime = @config.fetch("clear_repl_everytime") || false # global lock
 
       @current_channel = nil
       @current_nickname = nil
@@ -125,12 +130,15 @@ module Mchat
       })
     end
 
+    def _api
+      @api
+    end
 
     def fetch_channel_task
       Thread.new do
         last_news_time = 0
         while _current_channel && @channel_message_poll_running
-          resp = ::Mchat::Api.fetch_channel_message(_current_channel)
+          resp = _api.fetch_channel_message(_current_channel)
           data = resp.fetch("data")
           messages = data["messages"] || []
 
@@ -153,7 +161,7 @@ module Mchat
     def channel_heartbeat_task
       Thread.new do
         while _current_channel && _current_nickname && @channel_heartbeat_running
-          resp = ::Mchat::Api.ping_channel(_current_channel, _current_nickname)
+          resp = _api.ping_channel(_current_channel, _current_nickname)
           sleep @channel_heartbeat_time
         end
       end

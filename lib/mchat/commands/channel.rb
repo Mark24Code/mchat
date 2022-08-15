@@ -25,7 +25,7 @@ explain: login the channel
         def channel_command_run(channel_name = nil)
           if !channel_name
             # 返回全部节点
-            resp = ::Mchat::Api.get_channels
+            resp = _api.get_channels
             all_channels = resp.fetch("data")
 
             # cli
@@ -48,7 +48,7 @@ explain: login the channel
             # _puts2 content
           else
             # 指定节点
-            resp = ::Mchat::Api.get_channel(channel_name)
+            resp = _api.get_channel(channel_name)
             code = resp.fetch("code")
 
             if code == StatusCode::RecordNotExist

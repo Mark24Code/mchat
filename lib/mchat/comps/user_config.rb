@@ -3,7 +3,7 @@ require 'pathname'
 module Mchat
   module UserConfig
     CONFIG_DIR = Pathname.new(Dir.home).join('.mchat')
-    CONFIG_PATH = Pathname.new(Dir.home).join('.mchat').join('.mchatrc')
+    CONFIG_PATH = Pathname.new(Dir.home).join('.mchat').join('mchatrc')
     def user_config_exist?
       File.exist? CONFIG_PATH
     end
@@ -18,6 +18,7 @@ init_config = %Q(
 wait_prefix: ">>"
 display_welcome: true
 clear_repl_everytime: true
+server: "localhost:4567"
 
 )
       f << init_config

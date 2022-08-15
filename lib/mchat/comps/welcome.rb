@@ -7,7 +7,7 @@ module Mchat
     end
 
     def conn_server
-      resp = ::Mchat::Api.conn_server_startup
+      resp = _api.conn_server_startup
       startup_msg = resp.fetch("data")
       return Message.new(startup_msg).display
     end

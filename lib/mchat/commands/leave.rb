@@ -24,7 +24,7 @@ module Mchat
 
         def leave_command_run
           if _current_nickname
-            resp = ::Mchat::Api.leave_channel( _current_channel , _current_nickname)
+            resp = _api.leave_channel( _current_channel , _current_nickname)
             code = resp.fetch("code")
             if code == StatusCode::Success
               _puts "#{_current_nickname} leave success.".style.primary

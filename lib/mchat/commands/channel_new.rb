@@ -29,7 +29,7 @@ explain: create a new channel
             _puts content
           else
             # 指定节点
-            resp = ::Mchat::Api.create_channel(channel_name)
+            resp = _api.create_channel(channel_name)
             code = resp.fetch("code")
 
             if code == StatusCode::RecordHaveExist

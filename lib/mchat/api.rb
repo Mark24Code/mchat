@@ -41,11 +41,9 @@ module Mchat
 
   class Request
     include HTTParty
-    # TODO 读取用户文件配置
-    base_uri 'localhost:4567'
 
-
-    def initialize
+    def initialize(server)
+      self.class.base_uri server
       @headers = {"Accept": "application/json"}
     end
 
@@ -130,7 +128,4 @@ module Mchat
       )
     end
   end
-
-  Api = ::Mchat::Request.new
-
 end

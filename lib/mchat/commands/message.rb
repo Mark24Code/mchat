@@ -31,7 +31,7 @@ module Mchat
             _puts "You must register a name to this channel".style.warn
             _puts "type `/n[ame] <your name>` before chat".style.warn
           elsif _current_channel && _current_nickname
-            resp = ::Mchat::Api.create_channel_message(_current_channel, _current_nickname, words)
+            resp = _api.create_channel_message(_current_channel, _current_nickname, words)
             code = resp.fetch("code")
 
             if code != StatusCode::Success

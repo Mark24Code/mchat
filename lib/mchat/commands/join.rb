@@ -28,7 +28,7 @@ explain: join the channel
           else
             # TODO channel password
             # TODO channel 白名单
-            resp = ::Mchat::Api.get_channels
+            resp = _api.get_channels
             all_channels = resp.fetch("data")
 
             if all_channels.any? channel_name
