@@ -38,7 +38,7 @@ class MchatApp
     if @server
       # search `eval` 接受完整参数
       # https://www.gnu.org/software/screen/manual/screen.html
-      init_config << "screen -t repl eval mchat_repl --server=#{@server}"
+      init_config << "screen -t repl mchat_repl --server=#{@server}"
     else
       init_config << "screen -t repl mchat_repl"
     end

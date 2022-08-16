@@ -15,6 +15,6 @@ RUN bundle config mirror.https://rubygems.org https://gems.ruby-china.com
 # Install gems
 RUN gem install rainbow
 RUN gem install httparty
-RUN gem install mchat
+RUN gem install mchat -v 0.2.0
 
 CMD ["bash"]
